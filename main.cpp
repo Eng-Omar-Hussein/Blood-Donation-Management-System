@@ -2,7 +2,7 @@
 #include<string>
 using namespace std;
 class password {
-public:
+private:
 	string x, y = "123456789";
 public:
 	void set_password(string p) {
