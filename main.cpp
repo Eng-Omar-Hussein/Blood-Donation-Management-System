@@ -23,14 +23,11 @@ int main() {
 			cin >> my_password;
 			owner.set_password(my_password);
 			if (my_password == "0")
-				counter=0;
-			if (counter == 0) {
-				cout << "see you soon\n";
 				return 0;
 			}
-		}
+		
 		if (counter == 1) {
-		cout << "please enter a correct password:\n";
+		cout << "please enter a correct password: ";
 		cin >> my_password;
 		owner.set_password(my_password);
 		counter++; }
