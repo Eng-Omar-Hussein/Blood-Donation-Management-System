@@ -12,23 +12,27 @@ public:
 		if (x == y) return false;
 		return true;
 	}
+	void set_newpassword(string p) {
+		y=p;
+	}
 };
 int main() {
-	int counter = 0;
-	password owner;
+	int counter = 1;
 	string my_password;
+	password owner;
 	do {
-		if (counter > 0) {
-			cout << "your password is wrong to submit another one, please enter the number < 0 >: ";
-			cin >> counter;
-			if (counter != 0) {
-				cout << "see you soon\n";
+		if (counter > 1) {
+			cout << "your password is wrong , please enter a correct password or the number < 0 > to quit: ";
+			cin >> my_password;
+			owner.set_password(my_password);
+			if (my_password == "0")
 				return 0;
 			}
-		}
-		cout << "please enter a correct password:\n";
+		if (counter == 1) {
+		cout << "please enter a correct password: ";
 		cin >> my_password;
 		owner.set_password(my_password);
-		counter++;
+		counter++; }
 	} while (owner.check_password());
+	owner.set_newpassword("1234567890");
 }
