@@ -14,21 +14,28 @@ public:
 	}
 };
 int main() {
-	int counter = 0;
 	password owner;
-	string my_password;
-	do {
-		if (counter > 0) {
-			cout << "your password is wrong to submit another one, please enter the number < 0 >: ";
-			cin >> counter;
-			if (counter != 0) {
+	for (int counter = 1;owner.check_password()== true;counter++)
+        {
+        string my_password;
+		if (counter > 1)
+        {
+			cout << "your password is wrong please enter a correct password or to quit the program enter < 0 > : ";
+			cin >> my_password;
+            owner.set_password(my_password);
+			if (my_password == "0")
+				counter=0;
+			if (counter == 0)
+            {
 				cout << "see you soon\n";
-				return 0;
+				break;
 			}
 		}
-		cout << "please enter a correct password:\n";
+		if (counter == 1)
+        {
+        cout << "please enter a correct password:\n";
 		cin >> my_password;
 		owner.set_password(my_password);
-		counter++;
-	} while (owner.check_password());
+        }
+	    }
 }
