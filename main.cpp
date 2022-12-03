@@ -15,9 +15,9 @@ public:
 };
 int main() {
 	int counter = 1;
+	string my_password;
 	password owner;
 	do {
-		string my_password;
 		if (counter > 1) {
 			cout << "your password is wrong , please enter a correct password or the number < 0 > to quit: ";
 			cin >> my_password;
