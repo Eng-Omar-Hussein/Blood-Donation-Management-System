@@ -12,23 +12,22 @@ public:
 		if (x == y) return false;
 		return true;
 	}
-    set_newpassword(void) {
-	    cout<<"enter the old password: ";
-	    string z,p;
-	    do{
-        cin>>z;
-	    if (z == y)
-        {
-            cout<<"enter the new password: ";
-            cin>>p;
-            cout<<"password has changed successfully";
-            y = p;
-            break;
-        }
-        if (z == "0")
-			break;
-        cout<<"please enter a correct password or < 0 > to quit: ";
-	    }while(z != x);
+	void set_newpassword(void) {
+		cout << "enter the old password: ";
+		string z, p;
+		do {
+			cin >> z;
+			if (z == y){
+				cout << "enter the new password: ";
+				cin >> p;
+				cout << "password has changed successfully\n";
+				y = p;
+				break;
+			}
+			if (z == "0")
+				break;
+			cout << "please enter a correct password or < 0 > to quit: ";
+		} while (z != x);
 	}
 };
 int main() {
@@ -43,6 +42,14 @@ int main() {
 			return 0;
 		}
 	} while (owner.check_password());
-
-	owner.set_newpassword();
+	char tester;
+	do {
+		cout << "\nto change your password ,| enter <C> |\n";
+		cout << "to Search               ,| enter <S> |\n";
+		cout << "to Add or edite data    ,| enter <A> |\n";
+		cout << "to quit                 ,| enter <E> |\n";
+		cin >> tester;
+		if (tester == 'C' || tester == 'c')owner.set_newpassword();
+		if (tester == 'E' || tester == 'e')tester == 'e';
+	} while (tester != 'e');
 }
