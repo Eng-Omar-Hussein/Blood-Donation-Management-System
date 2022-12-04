@@ -12,9 +12,9 @@ public:
 		if (x == y) return false;
 		return true;
 	}
-	bool check_legitpassword(string password){
+	bool check_legitpassword(string password) {
 		bool haslower = true, hasupper = true, hasdigit = true, legitlenght = false;
-		for (int i = 0; i < password.length(); i++){
+		for (int i = 0; i < password.length(); i++) {
 			if (password.length() < 8) {
 				legitlenght = true;
 				break;
@@ -28,13 +28,13 @@ public:
 		}
 
 		if (legitlenght)
-			cout << "your password must have at least <8> digits\n";
+			cout << "your password must have at least <8> digits.\n";
 		else if (haslower)
-			cout << "your password must have at least <1> lowercase character\n";
+			cout << "your password must have at least <1> lowercase character.\n";
 		else if (hasupper)
-			cout << "your password must have at least <1> uppercase character\n";
+			cout << "your password must have at least <1> uppercase character.\n";
 		else if (hasdigit)
-			cout << "your password must have at least <1> digit character\n";
+			cout << "your password must have at least <1> digit character.\n";
 		if (legitlenght || haslower || hasupper || hasdigit)
 			return false;
 		else
@@ -47,8 +47,8 @@ public:
 			cin >> z;
 			if (z == y) {
 				cout << "please enter a new password or < 0 > to back : ";
-				while (true){
-					
+				while (true) {
+
 					cin >> new_passwor;
 					if (new_passwor != "0" && check_legitpassword(new_passwor)) {
 						cout << "password has changed successfully\n";
@@ -59,7 +59,7 @@ public:
 					else cout << "please enter a new password (but there are Constraints) or < 0 > to back : ";
 				}
 			}
-			else if(z != "0"&& z != y) cout << "please enter a correct password or < 0 > to back: ";
+			else if (z != "0" && z != y) cout << "please enter a correct password or < 0 > to back: ";
 		} while (z != x && z != "0");
 	}
 };
