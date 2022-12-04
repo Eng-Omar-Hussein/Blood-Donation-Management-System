@@ -1,7 +1,70 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+
 using namespace std;
+
+class Patient {
+    private:
+        string name, BloodType, mobile;
+        int age;
+    public:
+        // constructors
+        Patient() {}
+        Patient(string name, string bloodType, int age, string mobile);
+        // setters
+        void setName(string name);
+        void setBloodType(string setBloodType);
+        void setAge(int age);
+        void setMobile(string mobile);
+        // getters
+        string getName() { return name; }
+        string getBloodType() { return BloodType; }
+        string getMobile() { return mobile; }
+        int getAge() { return age; } 
+        // other functions
+        void readData();
+};
+
+Patient::Patient(string name, string bloodType, int age, string mobile) {
+    this->name = name;
+    this->BloodType = bloodType;
+    this->age = age;
+    this->mobile = mobile;
+}
+
+void Patient::setName(string name) {
+    this->name = name;
+}
+
+void Patient::setBloodType(string setBloodType) {
+    this->BloodType = BloodType;
+}
+
+void Patient::setMobile(string mobile) {
+    this->mobile = mobile;
+}
+
+void Patient::setAge(int age) {
+    this->age = age;
+}
+
+void Patient::readData() {
+    string name, bloodType, mobile; 
+    int age;
+    cout << "Please enter the patient's data: \n";
+    cout << "Name: ";
+    getline(cin, name); setName(name);
+    cout << "Blood Type: ";
+    cin >> BloodType; setBloodType(bloodType);
+    cout << "Mobile: ";
+    cin >> mobile; setMobile(mobile);
+    cout << "Age: ";
+    cin >> age; setAge(age);
+    cout << endl;
+}
+
+
 class password {
 private:
 	string x,y;
