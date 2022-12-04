@@ -12,22 +12,52 @@ public:
 		if (x == y) return false;
 		return true;
 	}
+	bool check_legitpassword(string password)
+        {
+   	bool haslower = false, hasupper = false, hasdigit = false, legitlenght=true;
+   	for (int i = 0; i < password.length(); i++)
+    		{
+      		if (password.length() < 8)
+      		{
+        	legitlenght = false;
+         	break;
+      		}
+      		if (islower(password[i]))
+         	haslower = true;
+      		if (isupper(password[i]))
+         	hasupper = true;
+      		if (isdigit(password[i]))
+         	hasdigit = true;
+    		}
+    		if ( legitlenght && haslower && hasupper && hasdigit)
+        	return true;
+    		else
+        	return false;
+   	}
 	void set_newpassword(void) {
 		cout << "enter the old password: ";
 		string z, p;
 		do {
-			cin >> z;
-			if (z == y){
-				cout << "enter the new password: ";
-				cin >> p;
-				cout << "password has changed successfully\n";
-				y = p;
-				break;
-			}
-			if (z == "0")
-				break;
-			cout << "please enter a correct password or < 0 > to quit: ";
-		} while (z != x);
+		cin >> z;
+		if (z == y){
+		while(true)
+            	{
+            	cout<<"enter the new password: ";
+            	cin>>p;
+            	if (check_legitpassword(p)){
+             	cout<<"password has changed successfully\n";
+             	y = p;
+             	break;
+            	}
+            	else
+             	cout<<"password should have at least 8 characters, 1 uppercase character, 1 lowercase character, and 1 digit\n";
+             	continue;
+            	}
+        }
+        if (z == "0" || check_legitpassword(p))
+		break;
+	cout << "please enter a correct password or < 0 > to quit: ";
+	} while (z != x);
 	}
 };
 int main() {
