@@ -20,8 +20,8 @@ public:
 		x = p;
 	}
 	bool check_password() {
-		if (x == y) return false;
-		return true;
+		if (x == y) return true;
+		return false;
 	}
 	bool check_legitpassword(string password) {
 		bool haslower = true, hasupper = true, hasdigit = true;
