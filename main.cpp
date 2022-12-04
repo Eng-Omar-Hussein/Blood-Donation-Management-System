@@ -20,8 +20,8 @@ int main() {
 		cout << "please enter a correct password or < 0 > to quit: ";
 		cin >> my_password;
 		owner.set_password(my_password);
-		if (my_password == "0"){
-			cout<<"see you soon";
+		if (!stoi(my_password)) {
+			cout << "see you soon\n";
 			return 0;
 		}
 	} while (owner.check_password());
