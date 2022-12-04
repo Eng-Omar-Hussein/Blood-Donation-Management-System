@@ -97,6 +97,7 @@ int main() {
 		cout << "to quit                 ,| enter <E> |\n";
 		cin >> tester;
 		if (tester == 'C' || tester == 'c')owner.set_newpassword();
+		//if (tester == 'A' || tester == 'A')Write here;
 		if (tester == 'E' || tester == 'e')tester = 'e';
 	} while (tester != 'e');
     }
