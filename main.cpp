@@ -12,52 +12,55 @@ public:
 		if (x == y) return false;
 		return true;
 	}
-	bool check_legitpassword(string password)
-        {
-   	bool haslower = false, hasupper = false, hasdigit = false, legitlenght=true;
-   	for (int i = 0; i < password.length(); i++)
-    		{
-      		if (password.length() < 8)
-      		{
-        	legitlenght = false;
-         	break;
-      		}
-      		if (islower(password[i]))
-         	haslower = true;
-      		if (isupper(password[i]))
-         	hasupper = true;
-      		if (isdigit(password[i]))
-         	hasdigit = true;
-    		}
-    		if ( legitlenght && haslower && hasupper && hasdigit)
-        	return true;
-    		else
-        	return false;
-   	}
+	bool check_legitpassword(string password){
+		bool haslower = true, hasupper = true, hasdigit = true, legitlenght = false;
+		for (int i = 0; i < password.length(); i++){
+			if (password.length() < 8) {
+				legitlenght = true;
+				break;
+			}
+			if (islower(password[i]))
+				haslower = false;
+			if (isupper(password[i]))
+				hasupper = false;
+			if (isdigit(password[i]))
+				hasdigit = false;
+		}
+
+		if (legitlenght)
+			cout << "your password must have at least <8> digits\n";
+		else if (haslower)
+			cout << "your password must have at least <1> lowercase character\n";
+		else if (hasupper)
+			cout << "your password must have at least <1> uppercase character\n";
+		else if (hasdigit)
+			cout << "your password must have at least <1> digit character\n";
+		if (legitlenght || haslower || hasupper || hasdigit)
+			return false;
+		else
+			return true;
+	}
 	void set_newpassword(void) {
 		cout << "enter the old password: ";
-		string z, p;
+		string z, new_passwor;
 		do {
-		cin >> z;
-		if (z == y){
-		while(true)
-            	{
-            	cout<<"enter the new password: ";
-            	cin>>p;
-            	if (check_legitpassword(p)){
-             	cout<<"password has changed successfully\n";
-             	y = p;
-             	break;
-            	}
-            	else
-             	cout<<"password should have at least 8 characters, 1 uppercase character, 1 lowercase character, and 1 digit\n";
-             	continue;
-            	}
-        }
-        if (z == "0" || check_legitpassword(p))
-		break;
-	cout << "please enter a correct password or < 0 > to quit: ";
-	} while (z != x);
+			cin >> z;
+			if (z == y) {
+				cout << "please enter a new password or < 0 > to back : ";
+				while (true){
+					
+					cin >> new_passwor;
+					if (new_passwor != "0" && check_legitpassword(new_passwor)) {
+						cout << "password has changed successfully\n";
+						y = new_passwor;
+						break;
+					}
+					else if (new_passwor == "0")break;
+					else cout << "please enter a new password (but there are Constraints) or < 0 > to back : ";
+				}
+			}
+			else if(z != "0"&& z != y) cout << "please enter a correct password or < 0 > to back: ";
+		} while (z != x && z != "0");
 	}
 };
 int main() {
