@@ -1,22 +1,31 @@
 #include<iostream>
 #include<fstream>
 #include<string>
-
-#define MAX_PATIENTS 100
-
+#include <vector>
 using namespace std;
 
 class password {
 private:
 	string x,y;
+	string encrypt(string password) {
+		for (int i = 0; i < password.size(); i++) {
+			password[i] += password.size() + i;
+		}
+		return password;
+	}
+	string decrypt(string password) {
+		for (int i = 0; i < password.size(); i++) {
+			password[i] -= password.size() + i;
+		}
+		return password;
+	}
 public:
-    password(void)
-    {
+    password(void){
         fstream file;
         file.open("password.txt", ios::in);
-        if (file.is_open())
-        {
+        if (file.is_open()){
             getline(file, y);
+			y = encrypt(y);
             file.close();
         }
     }
@@ -71,15 +80,13 @@ public:
 					if (new_passwor != "0" && check_legitpassword(new_passwor)) {
                         cout << "password has changed successfully\n";
                         fstream file;
-
                         file.open("password.txt", ios::out);
-
+						new_passwor = decrypt(new_passwor);
                         if (file.is_open()) {
                             file<<new_passwor;
                             file.close();
                         }
-
-                        y = new_passwor;
+						y = encrypt(new_passwor);
                         break;
 					}
 					else if(new_passwor == "0") break;
@@ -95,10 +102,9 @@ class Patient {
     private:
         string name, BloodType, mobile;
         int age, id;
-		
     public:
         // constructors
-        Patient() { }
+		Patient() {}
         Patient(string name, string bloodType, int age, string mobile, int id);
         // setters
         void setName(string name);
@@ -173,19 +179,18 @@ void Patient::printData() {
 	cout << "ID: " << getID() << endl;
 }
 
-void AddEditData(Patient p[]) {
+void AddEditData(vector<Patient>p) {
 	int choice;
 	int i = 0;
 	bool ON = true;
 	while(ON) {
 		cout << "******************************************\n";
-		cout << "To add a new patient's data enter 1\n";
-		cout << "To print the current patient's data enter 2\n";
-		cout << "To print all the patients' data in the system enter 3\n";
-		cout << "To return to the previous menu enter 4\n";
+		cout << "To add a new patient's data enter <1>\n";
+		cout << "To print the current patient's data enter <2>\n";
+		cout << "To print all the patients' data in the system enter <3>\n";
+		cout << "To return to the previous menu enter <4>\n";
 		cin >> choice;
-		switch (choice)
-		{
+		switch (choice){
 		case 1:
 			p[i++].readData();
 			break;
@@ -215,9 +220,8 @@ void AddEditData(Patient p[]) {
 }
 
 int main() {
-	Patient p[MAX_PATIENTS];
 	string my_password;
-
+	vector<Patient>p;
 	password owner;
 	do {
 		cout << "please enter a correct password or < 0 > to quit: ";
