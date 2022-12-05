@@ -7,13 +7,13 @@ using namespace std;
 class password {
 private:
 	string x,y;
-	string encrypt(string password) {
+	string decrypt(string password) {
 		for (int i = 0; i < password.size(); i++) {
 			password[i] += password.size() + i;
 		}
 		return password;
 	}
-	string decrypt(string password) {
+	string encrypt(string password) {
 		for (int i = 0; i < password.size(); i++) {
 			password[i] -= password.size() + i;
 		}
@@ -25,7 +25,7 @@ public:
         file.open("password.txt", ios::in);
         if (file.is_open()){
             getline(file, y);
-			y = encrypt(y);
+			y = decrypt(y);
             file.close();
         }
     }
@@ -70,31 +70,29 @@ public:
 
 	void set_newpassword(void) {
 		cout << "enter the old password: ";
-		string z, new_passwor;
 		do {
-			cin >> z;
-			if (z == y) {
+			cin >> x;
+			if (!check_password()) {
 				cout << "please enter a new password or < 0 > to return to menu : ";
 				while (true) {
-					cin >> new_passwor;
-					if (new_passwor != "0" && check_legitpassword(new_passwor)) {
+					cin >> x;
+					if (x != "0" && check_legitpassword(x)) {
                         cout << "password has changed successfully\n";
                         fstream file;
                         file.open("password.txt", ios::out);
-						new_passwor = decrypt(new_passwor);
                         if (file.is_open()) {
-                            file<<new_passwor;
+                            file<< encrypt(x);
                             file.close();
                         }
-						y = encrypt(new_passwor);
+						y = x;
                         break;
 					}
-					else if(new_passwor == "0") break;
+					else if(x == "0") break;
 					else cout << "please enter a new password with match constraints or < 0 > to return to menu: ";
 				}
 			}
-			else if (z != "0" && z != y) cout << "please enter a correct password or < 0 > to return to menu: ";
-		} while (z != x && z != "0" && new_passwor != "0");
+			else if (x != "0" && check_password()) cout << "please enter a correct password or < 0 > to return to menu: ";
+		} while (check_password()&& x != "0" );
 	}
 };
 
