@@ -105,7 +105,7 @@ public:
 	Patient(string name, string bloodType, string age, string mobile, string id);
 	// setters
 	void setName(string name);
-	void setBloodType(string setBloodType);
+	void setBloodType(string BloodType);
 	void setAge(string age);
 	void setMobile(string mobile);
 	void setID(string id);
@@ -133,7 +133,7 @@ void Patient::setName(string name) {
 	this->name = name;
 }
 
-void Patient::setBloodType(string setBloodType) {
+void Patient::setBloodType(string BloodType) {
 	this->BloodType = BloodType;
 }
 
