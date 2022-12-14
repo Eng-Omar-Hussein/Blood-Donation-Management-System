@@ -3,7 +3,6 @@
 #include<string>
 #include <vector>
 using namespace std;
-
 class password {
 private:
 	string x, y;
@@ -98,82 +97,46 @@ public:
 
 class Patient {
 private:
-	string name, BloodType, mobile, age, id;
+	string Name, BloodType, Mobile, ID, Age;
 public:
-	// constructors
-	Patient() {}
-	Patient(string name, string bloodType, string age, string mobile, string id);
-	// setters
-	void setName(string name);
-	void setBloodType(string setBloodType);
-	void setAge(string age);
-	void setMobile(string mobile);
-	void setID(string id);
-	// getters
-	string getName() { return name; }
-	string getBloodType() { return BloodType; }
-	string getMobile() { return mobile; }
-	string getAge() { return age; }
-	string getID() { return id; }
-	// other functions
-	void readData();
-	void printData();
+	void setName(string s) {
+		Name = s;
+	}
+	void setBloodType(string s) {
+		BloodType = s;
+	}
+	void setMobile(string s) {
+		Mobile = s;
+	}
+	void setID(string s) {
+		ID = s;
+	}
+	void setAge(string x) {
+		Age = x;
+	}
+	string getName() {
+		return Name;
+	}
+	string getBloodType() {
+		return BloodType;
+	}
+	string getMobile() {
+		return Mobile;
+	}
+	string getID() {
+		return ID;
+	}
+	string getAge() {
+		return Age;
+	}
+	Patient() {
+		Name = "omar";
+		BloodType = "o";
+		Mobile = "01100226115";
+		ID = "123456";
+		Age = "20";
+	}
 };
-
-
-Patient::Patient(string name, string bloodType, string age, string mobile, string id) {
-	this->name = name;
-	this->BloodType = bloodType;
-	this->age = age;
-	this->mobile = mobile;
-	this->id = id;
-}
-
-void Patient::setName(string name) {
-	this->name = name;
-}
-
-void Patient::setBloodType(string setBloodType) {
-	this->BloodType = BloodType;
-}
-
-void Patient::setMobile(string mobile) {
-	this->mobile = mobile;
-}
-
-void Patient::setAge(string age) {
-	this->age = age;
-}
-
-void Patient::setID(string id) {
-	this->id = id;
-}
-
-void Patient::readData() {
-	string name, bloodType, mobile, age, id;
-	cout << "Please enter the patient's data: \n";
-	cout << "Name: ";
-	cin.ignore();
-	getline(cin, name); setName(name);
-	cout << "Blood Type: ";
-	cin >> BloodType; setBloodType(bloodType);
-	cout << "Mobile: ";
-	cin >> mobile; setMobile(mobile);
-	cout << "Age: ";
-	cin >> age; setAge(age);
-	cout << "ID: ";
-	cin >> id; setID(id);
-	cout << endl;
-}
-
-void Patient::printData() {
-	cout << "Name: " << getName() << endl;
-	cout << "Blood Type: " << getBloodType() << endl;
-	cout << "Mobile: " << getMobile() << endl;
-	cout << "Age: " << getAge() << endl;
-	cout << "ID: " << getID() << endl;
-}
-
 
 void Search_no(vector<Patient>obj, int num, int i) {
 	if (i > 0 && i <= num) {
@@ -233,19 +196,19 @@ void app_data(vector<Patient>& obj, int num) {
 void add_new(vector<Patient>& obj1, int* p) {
 	string x1;
 	cout << "Patient #" << *p + 1 << endl;;
-	cout << "name: ";
+	cout << "Name: ";
 	cin >> x1;
 	obj1[*p].setName(x1);
 	cout << "BloodType: ";
 	cin >> x1;
 	obj1[*p].setBloodType(x1);
-	cout << "mobile: ";
+	cout << "Mobile: ";
 	cin >> x1;
 	obj1[*p].setMobile(x1);
-	cout << "id: ";
+	cout << "ID: ";
 	cin >> x1;
 	obj1[*p].setID(x1);
-	cout << "age: ";
+	cout << "Age: ";
 	cin >> x1;
 	obj1[*p].setAge(x1);
 	(*p)++;
@@ -289,4 +252,5 @@ int main() {
 		if (tester == 'E' || tester == 'e');
 		if (tester == 'Q' || tester == 'q')break;
 	}
+	return 0;
 }
