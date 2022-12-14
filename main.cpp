@@ -6,7 +6,7 @@ using namespace std;
 
 class password {
 private:
-	string x,y;
+	string x, y;
 	string decrypt(string password) {
 		for (int i = 0; i < password.size(); i++) {
 			password[i] += password.size() + i;
@@ -20,15 +20,15 @@ private:
 		return password;
 	}
 public:
-    password(void){
-        fstream file;
-        file.open("password.txt", ios::in);
-        if (file.is_open()){
-            getline(file, y);
+	password(void) {
+		fstream file;
+		file.open("password.txt", ios::in);
+		if (file.is_open()) {
+			getline(file, y);
 			y = decrypt(y);
-            file.close();
-        }
-    }
+			file.close();
+		}
+	}
 
 	void set_password(string p) {
 		x = p;
@@ -43,8 +43,8 @@ public:
 		bool haslower = true, hasupper = true, hasdigit = true;
 
 		if (password.length() < 8) {
-				cout << "your password must have at least <8> digits.\n";
-				return false;
+			cout << "your password must have at least <8> digits.\n";
+			return false;
 		}
 
 		for (int i = 0; i < password.length(); i++) {
@@ -77,96 +77,93 @@ public:
 				while (true) {
 					cin >> x;
 					if (x != "0" && check_legitpassword(x)) {
-                        cout << "password has changed successfully\n";
-                        fstream file;
-                        file.open("password.txt", ios::out);
-                        if (file.is_open()) {
-                            file<< encrypt(x);
-                            file.close();
-                        }
+						cout << "password has changed successfully\n";
+						fstream file;
+						file.open("password.txt", ios::out);
+						if (file.is_open()) {
+							file << encrypt(x);
+							file.close();
+						}
 						y = x;
-                        break;
+						break;
 					}
-					else if(x == "0") break;
+					else if (x == "0") break;
 					else cout << "please enter a new password with match constraints or < 0 > to return to menu: ";
 				}
 			}
 			else if (x != "0" && check_password()) cout << "please enter a correct password or < 0 > to return to menu: ";
-		} while (check_password()&& x != "0" );
+		} while (check_password() && x != "0");
 	}
 };
 
 class Patient {
-    private:
-        string name, BloodType, mobile;
-        int age, id;
-    public:
-        // constructors
-		Patient() {}
-        Patient(string name, string bloodType, int age, string mobile, int id);
-        // setters
-        void setName(string name);
-        void setBloodType(string setBloodType);
-        void setAge(int age);
-        void setMobile(string mobile);
-		void setID(int id);
-        // getters
-        string getName() { return name; }
-        string getBloodType() { return BloodType; }
-        string getMobile() { return mobile; }
-        int getAge() { return age; } 
-		int getID() { return id; }
-        // other functions
-        void readData();
-		void printData();
+private:
+	string name, BloodType, mobile, age, id;
+public:
+	// constructors
+	Patient() {}
+	Patient(string name, string bloodType, string age, string mobile, string id);
+	// setters
+	void setName(string name);
+	void setBloodType(string setBloodType);
+	void setAge(string age);
+	void setMobile(string mobile);
+	void setID(string id);
+	// getters
+	string getName() { return name; }
+	string getBloodType() { return BloodType; }
+	string getMobile() { return mobile; }
+	string getAge() { return age; }
+	string getID() { return id; }
+	// other functions
+	void readData();
+	void printData();
 };
 
 
-Patient::Patient(string name, string bloodType, int age, string mobile, int id) {
-    this->name = name;
-    this->BloodType = bloodType;
-    this->age = age;
-    this->mobile = mobile;
+Patient::Patient(string name, string bloodType, string age, string mobile, string id) {
+	this->name = name;
+	this->BloodType = bloodType;
+	this->age = age;
+	this->mobile = mobile;
 	this->id = id;
 }
 
 void Patient::setName(string name) {
-    this->name = name;
+	this->name = name;
 }
 
 void Patient::setBloodType(string setBloodType) {
-    this->BloodType = BloodType;
+	this->BloodType = BloodType;
 }
 
 void Patient::setMobile(string mobile) {
-    this->mobile = mobile;
+	this->mobile = mobile;
 }
 
-void Patient::setAge(int age) {
-    this->age = age;
+void Patient::setAge(string age) {
+	this->age = age;
 }
 
-void Patient::setID(int id) {
+void Patient::setID(string id) {
 	this->id = id;
 }
 
 void Patient::readData() {
-    string name, bloodType, mobile; 
-    int age, id;
-    cout << "Please enter the patient's data: \n";
-    cout << "Name: ";
+	string name, bloodType, mobile, age, id;
+	cout << "Please enter the patient's data: \n";
+	cout << "Name: ";
 	cin.ignore();
-    getline(cin, name); setName(name);
-    cout << "Blood Type: ";
-    cin >> BloodType; setBloodType(bloodType);
-    cout << "Mobile: ";
-    cin >> mobile; setMobile(mobile);
-    cout << "Age: ";
-    cin >> age; setAge(age);
+	getline(cin, name); setName(name);
+	cout << "Blood Type: ";
+	cin >> BloodType; setBloodType(bloodType);
+	cout << "Mobile: ";
+	cin >> mobile; setMobile(mobile);
+	cout << "Age: ";
+	cin >> age; setAge(age);
 	cout << "ID: ";
 	cin >> id; setID(id);
-    cout << endl;
-	id++;
+	cout << endl;
 }
 
 void Patient::printData() {
@@ -177,49 +174,85 @@ void Patient::printData() {
 	cout << "ID: " << getID() << endl;
 }
 
-void AddEditData(vector<Patient>p) {
-	int choice;
-	int i = 0;
-	bool ON = true;
-	while(ON) {
-		cout << "******************************************\n";
-		cout << "To add a new patient's data enter <1>\n";
-		cout << "To print the current patient's data enter <2>\n";
-		cout << "To print all the patients' data in the system enter <3>\n";
-		cout << "To return to the previous menu enter <4>\n";
-		cin >> choice;
-		switch (choice){
-		case 1:
-			p[i++].readData();
-			break;
 
-		case 2:
-			p[i - 1].printData();
-			break;
-
-		case 3:
-			for (int j = 0; j < i; j++) {
-				cout << "**********************************\n";
-				cout << "Patient #" << j + 1 << " data: \n";
-				p[j].printData();
-			}
-			break;
-
-		case 4:
-			ON = false;
-			break;
-		
-		default:
-			cout << "please enter a valid choice\n";
-			break;
+void Search_no(vector<Patient>obj, int num, int i) {
+	if (i > 0 && i <= num) {
+		i--;
+		cout << "*********************\n";
+		cout << "Name: " << obj[i].getName() << endl;
+		cout << "BloodType: " << obj[i].getBloodType() << endl;
+		cout << "Mobilee: " << obj[i].getMobile() << endl;
+		cout << "ID: " << obj[i].getID() << endl;
+		cout << "Age: " << obj[i].getAge() << endl;
+		cout << "*********************\n";
+	}
+	else cout << "it is not found\n";
+}
+void refrish(int* p) {
+	fstream file;
+	file.open("data.txt", ios::in);
+	if (file.is_open()) {
+		string t;
+		while (true) {
+			getline(file, t);
+			if (t.size()) (*p)++;
+			else break;
 		}
-		
+		file.close();
 	}
 }
-
+void update(vector<Patient>& obj, int num) {
+	fstream file;
+	file.open("data.txt", ios::in);
+	if (file.is_open()) {
+		string temp;
+		for (int i = 0; i < num; i++) {
+			getline(file, temp);
+			obj[i].setName(temp.substr(0, temp.find(",")));
+			obj[i].setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
+			obj[i].setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
+			obj[i].setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
+			obj[i].setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
+		}
+		file.close();
+	}
+}
+void app_data(vector<Patient>& obj, int num) {
+	fstream file;
+	num--;
+	file.open("data.txt", ios::app);
+	if (file.is_open()) {
+		file << obj[num].getName() << ",";
+		file << obj[num].getBloodType() << ";";
+		file << obj[num].getMobile() << "/";
+		file << obj[num].getID() << ":";
+		file << obj[num].getAge() << ".\n";
+		file.close();
+	}
+}
+void add_new(vector<Patient>& obj1, int* p) {
+	string x1;
+	cout << "Patient #" << *p + 1 << endl;;
+	cout << "name: ";
+	cin >> x1;
+	obj1[*p].setName(x1);
+	cout << "BloodType: ";
+	cin >> x1;
+	obj1[*p].setBloodType(x1);
+	cout << "mobile: ";
+	cin >> x1;
+	obj1[*p].setMobile(x1);
+	cout << "id: ";
+	cin >> x1;
+	obj1[*p].setID(x1);
+	cout << "age: ";
+	cin >> x1;
+	obj1[*p].setAge(x1);
+	(*p)++;
+}
 int main() {
 	string my_password;
-	vector<Patient>p;
+	vector<Patient>obj(100);
 	password owner;
 	do {
 		cout << "please enter a correct password or < 0 > to quit: ";
@@ -230,15 +263,30 @@ int main() {
 			return 0;
 		}
 	} while (owner.check_password());
+	int num = 0;
+	refrish(&num);
+	update(obj, num);
+	cout << "\nthe number of patients in the system : " << num << endl;
 	char tester;
-	do {
+	while(true){
 		cout << "\nto change your password ,| enter <C> |\n";
 		cout << "to Search               ,| enter <S> |\n";
-		cout << "to Add or edit data     ,| enter <A> |\n";
-		cout << "to quit                 ,| enter <E> |\n";
+		cout << "to Add data             ,| enter <A> |\n";
+		cout << "to Edit data            ,| enter <E> |\n";
+		cout << "to Quit                 ,| enter <Q> |\n";
 		cin >> tester;
 		if (tester == 'C' || tester == 'c')owner.set_newpassword();
-		if (tester == 'A' || tester == 'a') AddEditData(p);
-		if (tester == 'E' || tester == 'e')tester = 'e';
-	} while (tester != 'e');  
+		if (tester == 'S' || tester == 's') {
+			int i = 0;
+			cout << "the no. of patiant : ";
+			cin >> i;
+			Search_no(obj, num, i);
+		}
+		if (tester == 'A' || tester == 'a') {
+			add_new(obj, &num);
+			app_data(obj, num);
+		}
+		if (tester == 'E' || tester == 'e');
+		if (tester == 'Q' || tester == 'q')break;
+	}
 }
