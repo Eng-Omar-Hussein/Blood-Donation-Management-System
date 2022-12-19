@@ -299,7 +299,8 @@ void edit_data(vector<Patient>& obj) {
 	cout << "Enter the patient's no: ";
 	cin >> index;
 	string new_name, new_blood, new_mobile, new_age, new_id;
-	cout << "Editing data of patient #" << index + 1 << endl;
+	cout << "Editing data of patient #" << index << endl;
+	index --;
 	while(true) {
 		cout << "1 edit name\n";
 		cout << "2 edit blood type\n";
@@ -344,7 +345,20 @@ void edit_data(vector<Patient>& obj) {
 		}
 	}
 }
-
+void out_all_data(vector<Patient>& obj, int num) {
+	fstream file;
+	file.open("data.txt", ios::out);
+	if (file.is_open()) {
+		for (int i = 0; i < num; i++) {
+			file << obj[i].getName() << ",";
+			file << obj[i].getBloodType() << ";";
+			file << obj[i].getMobile() << "/";
+			file << obj[i].getID() << ":";
+			file << obj[i].getAge() << ".\n";
+		}
+		file.close();
+	}
+}
 int main() {
 	string my_password;
 	vector<Patient>obj(100);
@@ -382,7 +396,10 @@ int main() {
 			add_new(obj, &num);
 			app_data(obj, num);
 		}
-		if (tester == 'E' || tester == 'e')edit_data(obj);
+		if (tester == 'E' || tester == 'e'){
+			edit_data(obj);
+			out_all_data(obj, num);
+		}
 		if (tester == 'd' || tester == 'D')delete_element(obj, &num);
 		if (tester == 'Q' || tester == 'q')break;
 	}
