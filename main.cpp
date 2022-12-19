@@ -293,6 +293,58 @@ void add_new(vector<Patient>& obj1, int* p) {
 	(*p)++;
 	cout << "\nthe current number of patients: " << *p << "\n\n";
 }
+
+void edit_data(vector<Patient>& obj) {
+	int choice, index;
+	cout << "Enter the patient's no: ";
+	cin >> index;
+	string new_name, new_blood, new_mobile, new_age, new_id;
+	cout << "Editing data of patient #" << index + 1 << endl;
+	while(true) {
+		cout << "1 edit name\n";
+		cout << "2 edit blood type\n";
+		cout << "3 edit mobile\n";
+		cout << "4 edit ID\n";
+		cout << "5 edit age\n";
+		cout << "6 return\n";
+		cout << "Please enter your choice: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			cout << "Enter the new name: ";
+			cin.ignore();
+			getline(cin, new_name); 
+			obj[index].setName(new_name);
+			break;
+		case 2:
+			cout << "Enter the new blood type: ";
+			cin >> new_blood;
+			obj[index].setBloodType(new_blood);
+			break;
+		case 3:
+			cout << "Enter the new mobile: ";
+			cin >> new_mobile;
+			obj[index].setMobile(new_mobile);
+			break;
+		case 4:
+			cout << "Enter the new id: ";
+			cin >> new_id;
+			obj[index].setID(new_id);
+			break;
+		case 5:
+			cout << "Enter the new age: ";
+			cin >> new_age;
+			obj[index].setAge(new_age);
+			break;
+		case 6:
+			return;
+		default:
+			break;
+		}
+	}
+}
+
 int main() {
 	string my_password;
 	vector<Patient>obj(100);
@@ -330,7 +382,7 @@ int main() {
 			add_new(obj, &num);
 			app_data(obj, num);
 		}
-		if (tester == 'E' || tester == 'e');
+		if (tester == 'E' || tester == 'e')edit_data(obj);
 		if (tester == 'd' || tester == 'D')delete_element(obj, &num);
 		if (tester == 'Q' || tester == 'q')break;
 	}
