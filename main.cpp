@@ -174,7 +174,10 @@ void Patient::printData() {
 	cout << "ID: " << getID() << endl;
 }
 
-void Search_no(vector<Patient>obj, int num, int i) {
+void Search_no(vector<Patient>obj, int num){
+	int i = 0;
+	cout << "the no. of patiant : ";
+	cin >> i;
 	if (i > 0 && i <= num) {
 		i--;
 		cout << "*********************\n";
@@ -234,19 +237,7 @@ int delete_element(vector<Patient>& obj1, int* p) {
 			{
 				obj1.erase(obj1.begin() + i);
 				(*p)--;
-				fstream file;
-				file.open("data.txt", ios::out);
-				if (file.is_open()) {
-					for (int i = 0; i < *p; i++)
-					{
-						file << obj1[i].getName() << ",";
-						file << obj1[i].getBloodType() << ";";
-						file << obj1[i].getMobile() << "/";
-						file << obj1[i].getID() << ":";
-						file << obj1[i].getAge() << ".\n";
-					}
-				}
-				file.close();
+				out_all_data(obj1, *p);
 				cout << "\npatient's data has been deleted successfully\n";
 				cout << "\nthe current number of patients: " << *p << "\n\n";
 				return 0;
@@ -300,14 +291,14 @@ void edit_data(vector<Patient>& obj) {
 	cin >> index;
 	string new_name, new_blood, new_mobile, new_age, new_id;
 	cout << "Editing data of patient #" << index << endl;
-	index --;
-	while(true) {
-		cout << "1 edit name\n";
-		cout << "2 edit blood type\n";
-		cout << "3 edit mobile\n";
-		cout << "4 edit ID\n";
-		cout << "5 edit age\n";
-		cout << "6 return\n";
+	index--;
+	while (true) {
+		cout << "1) edit name\n";
+		cout << "2) edit blood type\n";
+		cout << "3) edit mobile\n";
+		cout << "4) edit ID\n";
+		cout << "5) edit age\n";
+		cout << "6) return\n";
 		cout << "Please enter your choice: ";
 		cin >> choice;
 		switch (choice)
@@ -315,7 +306,7 @@ void edit_data(vector<Patient>& obj) {
 		case 1:
 			cout << "Enter the new name: ";
 			cin.ignore();
-			getline(cin, new_name); 
+			getline(cin, new_name);
 			obj[index].setName(new_name);
 			break;
 		case 2:
@@ -386,17 +377,12 @@ int main() {
 		cout << "to Quit                 ,| enter <Q> |\n";
 		cin >> tester;
 		if (tester == 'C' || tester == 'c')owner.set_newpassword();
-		if (tester == 'S' || tester == 's') {
-			int i = 0;
-			cout << "the no. of patiant : ";
-			cin >> i;
-			Search_no(obj, num, i);
-		}
+		if (tester == 'S' || tester == 's')Search_no(obj, num);
 		if (tester == 'A' || tester == 'a') {
 			add_new(obj, &num);
 			app_data(obj, num);
 		}
-		if (tester == 'E' || tester == 'e'){
+		if (tester == 'E' || tester == 'e') {
 			edit_data(obj);
 			out_all_data(obj, num);
 		}
