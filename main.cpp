@@ -104,6 +104,281 @@ public:
 	Patient() {}
 	Patient(string name, string bloodType, string age, string mobile, string id);
 	// setters
+	void add_new(vector<Patient>& obj1, int* p) {
+	string x1;
+	cout << "\nPatient #" << *p + 1 <<"\n\n";
+	cout << "name: ";
+	cin.ignore();
+	getline(cin,x1);
+	obj1[*p].setName(x1);
+
+	while(true){
+    cout<<"Blood type: ";
+    cin >> x1;
+    if(check_BloodType(x1))
+    {
+        obj1[*p].setBloodType(x1);
+        break;
+    }
+    else cout<<"\nInvalid Blood type\n\n";
+    }
+
+	while(true){
+    cout << "mobile: ";
+    cin >> x1;
+    if(check_mobile(x1))
+    {
+        obj1[*p].setMobile(x1);
+        break;
+    }
+    else cout<<"\nInvalid phone number\n\n";
+    }
+
+	while(true){
+    cout << "id: ";
+    cin >> x1;
+    if(check_ID(x1))
+    {
+        obj1[*p].setID(x1);
+        break;
+    }
+    else cout<<"\nInvalid ID\n\n";
+    }
+
+	while(true)
+    {
+    cout<<"Enter age: ";
+    cin >> x1;
+    if(check_age(x1))
+    {
+        obj1[*p].setAge(x1);
+        break;
+    }
+    else
+    cout<<"\nage is Invalid\n\n";
+    }
+	(*p)++;
+	app_data(obj1, *(p));
+	cout << "\nPatient #" <<*p<<" has been added successfully\n";
+	cout <<"\nthe current number of patients: "<<*p<<"\n\n";
+}
+void edit_data(vector<Patient> &obj1, int *p) {
+	string x;
+	cout<<"Enter the patient's id: ";
+    cin>>x;
+    for (int i=0;i<*p;i++)
+            {
+            if(x == obj1[i].getID())
+            {
+            string y;
+            char choice;
+            cout << "Editing data of patient #" << i + 1 << endl;
+            while(true) {
+            cout << "1 edit name\n";
+            cout << "2 edit blood type\n";
+            cout << "3 edit mobile\n";
+            cout << "4 edit ID\n";
+            cout << "5 edit age\n";
+            cout << "6 return to main menu\n";
+            cout << "Please enter your choice: ";
+            cin >> choice;
+            switch (choice)
+            {
+            case '1':
+                cout << "Enter the new name: ";
+                cin.ignore();
+                getline(cin, y);
+                obj1[i].setName(y);
+                break;
+            case '2':
+                while(true){
+                cout << "Enter the new blood type: ";
+                cin >> y;
+                if(obj1[i].check_BloodType(y))
+                {
+                    obj1[i].setBloodType(y);
+                    break;
+                }
+                else cout<<"\nInvalid Blood type\n\n";
+                }
+                break;
+            case '3':
+                while(true){
+                cout << "Enter the new mobile: ";
+                cin >> y;
+                if(obj1[i].check_mobile(y))
+                {
+                    obj1[i].setMobile(y);
+                    break;
+                }
+                else cout<<"\nInvalid phone number\n\n";
+                }
+                break;
+            case '4':
+                while(true){
+                cout << "Enter the new id: ";
+                cin >> y;
+                if(obj1[i].check_ID(y))
+                {
+                    obj1[i].setID(y);
+                    break;
+                }
+                else cout<<"\nInvalid ID\n\n";
+                }
+                break;
+            case '5':
+                while(true){
+                cout << "Enter the new age: ";
+                cin >> y;
+                if(obj1[i].check_age(y))
+                {
+                    obj1[i].setAge(y);
+                    break;
+                }
+                else cout<<"\nInvalid Age\n\n";
+                }
+                break;
+            case '6':
+                return;
+            default:
+                break;
+            }
+            }
+            }
+            }
+            cout<<"\nid not found\n\n";
+}
+void refrish(int *p) {
+	fstream file;
+	file.open("data.txt", ios::in);
+	if (file.is_open()) {
+		string t;
+		while (!file.eof()) {
+			getline(file, t);
+            if(t.size())
+               (*p)++;
+            file >> ws;
+		}
+		file.close();
+	}
+}
+void update(vector<Patient> &obj, int num) {
+	fstream file;
+	file.open("data.txt", ios::in);
+	if (file.is_open()) {
+		string temp;
+		for (int i = 0; i < num; i++) {
+            file >> ws;
+			getline(file, temp);
+			obj[i].setName(temp.substr(0, temp.find(",")));
+			obj[i].setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
+			obj[i].setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
+			obj[i].setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
+			obj[i].setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
+            file >> ws;
+		}
+		file.close();
+	}
+}
+void overwrite_data(vector<Patient>& obj, int num){
+    fstream file;
+    file.open("data.txt", ios::out);
+    if (file.is_open()) {
+    for (int i = 0;i<num;i++)
+    {
+    file << obj[i].getName() << ",";
+    file << obj[i].getBloodType() << ";";
+    file << obj[i].getMobile() << "/";
+    file << obj[i].getID() << ":";
+    file << obj[i].getAge() << ".\n";
+    }
+    }
+    file.close();
+}
+void app_data(vector<Patient>& obj, int num) {
+	fstream file;
+	num--;
+	file.open("data.txt", ios::app);
+	if (file.is_open()) {
+		file << obj[num].getName() << ",";
+		file << obj[num].getBloodType() << ";";
+		file << obj[num].getMobile() << "/";
+		file << obj[num].getID() << ":";
+		file << obj[num].getAge() << ".\n";
+		file.close();
+	}
+}
+int delete_element(vector<Patient> &obj1, int *p) {
+	    string x;
+	    char y;
+	    cout<<"Enter id of patient: ";
+	    cin>>x;
+	    cout<<"\nare you sure about this deletion process? Enter <Y> or <N>  ";
+	    cin>>y;
+	    if (y == 'y' || y == 'Y')
+        {
+            for (int i=0;i<*p;i++)
+            {
+            if(x == obj1[i].getID())
+            {
+                obj1.erase(obj1.begin()+i);
+                (*p)--;
+                overwrite_data(obj1, *p);
+                cout<<"\npatient's data has been deleted successfully\n";
+                cout <<"\nthe current number of patients: "<<*p<<"\n\n";
+                return 0;
+            }
+            }
+            cout<<"\nid not found\n\n";
+            return 0;
+        }
+	    if (y == 'n' || y == 'N')
+            return 0;
+
+}
+void Search_no(vector<Patient>obj, int num, int i) {
+	if (i > 0 && i <= num) {
+		i--;
+		cout << "*********************\n";
+		cout << "Name: " << obj[i].getName() << endl;
+		cout << "BloodType: " << obj[i].getBloodType() << endl;
+		cout << "Mobilee: " << obj[i].getMobile() << endl;
+		cout << "ID: " << obj[i].getID() << endl;
+		cout << "Age: " << obj[i].getAge() << endl;
+		cout << "*********************\n";
+	}
+	else cout << "it is not found\n";
+}
+bool check_BloodType(string x) {
+    if(x == "A+" || x == "A-")
+        return true;
+    else if(x == "B+" || x == "B-")
+        return true;
+    else if(x == "O+" || x == "O-")
+        return true;
+    else if(x == "AB+" || x == "AB-")
+        return true;
+    else
+        return false;
+}
+bool check_ID(string x){
+    if(x.find_first_not_of("0123456789") == string::npos && x.length() == 14)
+        return true;
+    else
+        return false;
+}
+bool check_mobile(string x){
+    if(x.find_first_not_of("0123456789") == string::npos && x.length() == 11)
+        return true;
+    else
+        return false;
+}
+bool check_age(string x){
+    if(x.find_first_not_of("0123456789") == string::npos)
+        return true;
+    else
+        return false;
+}
 	void setName(string name);
 	void setBloodType(string BloodType);
 	void setAge(string age);
@@ -174,182 +449,6 @@ void Patient::printData() {
 	cout << "ID: " << getID() << endl;
 }
 
-void Search_no(vector<Patient>obj, int num){
-	int i = 0;
-	cout << "the no. of patiant : ";
-	cin >> i;
-	if (i > 0 && i <= num) {
-		i--;
-		cout << "*********************\n";
-		cout << "Name: " << obj[i].getName() << endl;
-		cout << "BloodType: " << obj[i].getBloodType() << endl;
-		cout << "Mobilee: " << obj[i].getMobile() << endl;
-		cout << "ID: " << obj[i].getID() << endl;
-		cout << "Age: " << obj[i].getAge() << endl;
-		cout << "*********************\n";
-	}
-	else cout << "it is not found\n";
-}
-void refrish(int* p) {
-	fstream file;
-	file.open("data.txt", ios::in);
-	if (file.is_open()) {
-		string t;
-		while (!file.eof()) {
-			getline(file, t);
-			if (t.size())
-				(*p)++;
-			file >> ws;
-		}
-		file.close();
-	}
-}
-void update(vector<Patient>& obj, int num) {
-	fstream file;
-	file.open("data.txt", ios::in);
-	if (file.is_open()) {
-		string temp;
-		for (int i = 0; i < num; i++) {
-			file >> ws;
-			getline(file, temp);
-			obj[i].setName(temp.substr(0, temp.find(",")));
-			obj[i].setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
-			obj[i].setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
-			obj[i].setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
-			obj[i].setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
-			file >> ws;
-		}
-		file.close();
-	}
-}
-int delete_element(vector<Patient>& obj1, int* p) {
-	string x;
-	char y;
-	cout << "Enter id of patient: ";
-	cin >> x;
-	cout << "\nare you sure about this deletion process? Enter <Y> or <N>  ";
-	cin >> y;
-	if (y == 'y' || y == 'Y')
-	{
-		for (int i = 0; i < *p; i++)
-		{
-			if (x == obj1[i].getID())
-			{
-				obj1.erase(obj1.begin() + i);
-				(*p)--;
-				out_all_data(obj1, *p);
-				cout << "\npatient's data has been deleted successfully\n";
-				cout << "\nthe current number of patients: " << *p << "\n\n";
-				return 0;
-			}
-		}
-		cout << "\nid not found\n\n";
-		return 0;
-	}
-	if (y == 'n' || y == 'N')
-		return 0;
-
-}
-void app_data(vector<Patient>& obj, int num) {
-	fstream file;
-	num--;
-	file.open("data.txt", ios::app);
-	if (file.is_open()) {
-		file << obj[num].getName() << ",";
-		file << obj[num].getBloodType() << ";";
-		file << obj[num].getMobile() << "/";
-		file << obj[num].getID() << ":";
-		file << obj[num].getAge() << ".\n";
-		file.close();
-	}
-}
-void add_new(vector<Patient>& obj1, int* p) {
-	string x1;
-	cout << "\nPatient #" << *p + 1 << "\n\n";
-	cout << "Name: ";
-	cin >> x1;
-	obj1[*p].setName(x1);
-	cout << "BloodType: ";
-	cin >> x1;
-	obj1[*p].setBloodType(x1);
-	cout << "Mobile: ";
-	cin >> x1;
-	obj1[*p].setMobile(x1);
-	cout << "ID: ";
-	cin >> x1;
-	obj1[*p].setID(x1);
-	cout << "Age: ";
-	cin >> x1;
-	obj1[*p].setAge(x1);
-	(*p)++;
-	cout << "\nthe current number of patients: " << *p << "\n\n";
-}
-
-void edit_data(vector<Patient>& obj) {
-	int choice, index;
-	cout << "Enter the patient's no: ";
-	cin >> index;
-	string new_name, new_blood, new_mobile, new_age, new_id;
-	cout << "Editing data of patient #" << index << endl;
-	index--;
-	while (true) {
-		cout << "1) edit name\n";
-		cout << "2) edit blood type\n";
-		cout << "3) edit mobile\n";
-		cout << "4) edit ID\n";
-		cout << "5) edit age\n";
-		cout << "6) return\n";
-		cout << "Please enter your choice: ";
-		cin >> choice;
-		switch (choice)
-		{
-		case 1:
-			cout << "Enter the new name: ";
-			cin.ignore();
-			getline(cin, new_name);
-			obj[index].setName(new_name);
-			break;
-		case 2:
-			cout << "Enter the new blood type: ";
-			cin >> new_blood;
-			obj[index].setBloodType(new_blood);
-			break;
-		case 3:
-			cout << "Enter the new mobile: ";
-			cin >> new_mobile;
-			obj[index].setMobile(new_mobile);
-			break;
-		case 4:
-			cout << "Enter the new id: ";
-			cin >> new_id;
-			obj[index].setID(new_id);
-			break;
-		case 5:
-			cout << "Enter the new age: ";
-			cin >> new_age;
-			obj[index].setAge(new_age);
-			break;
-		case 6:
-			return;
-		default:
-			break;
-		}
-	}
-}
-void out_all_data(vector<Patient>& obj, int num) {
-	fstream file;
-	file.open("data.txt", ios::out);
-	if (file.is_open()) {
-		for (int i = 0; i < num; i++) {
-			file << obj[i].getName() << ",";
-			file << obj[i].getBloodType() << ";";
-			file << obj[i].getMobile() << "/";
-			file << obj[i].getID() << ":";
-			file << obj[i].getAge() << ".\n";
-		}
-		file.close();
-	}
-}
 int main() {
 	string my_password;
 	vector<Patient>obj(100);
@@ -364,31 +463,38 @@ int main() {
 		}
 	} while (owner.check_password());
 	int num = 0;
-	refrish(&num);
-	update(obj, num);
+	obj[0].refrish(&num);
+	obj[0].update(obj, num);
 	cout << "\nthe number of patients in the system : " << num << endl;
 	char tester;
-	while (true) {
+	while(true){
 		cout << "\nto change your password ,| enter <C> |\n";
 		cout << "to Search               ,| enter <S> |\n";
 		cout << "to Add data             ,| enter <A> |\n";
 		cout << "to delete data          ,| enter <D> |\n";
 		cout << "to Edit data            ,| enter <E> |\n";
+		cout << "to clear screen         ,| enter <X> |\n";
 		cout << "to Quit                 ,| enter <Q> |\n";
+		cout << "Enter your option: ";
 		cin >> tester;
+		if (tester == 'X' || tester == 'x')
+            system("cls");
 		if (tester == 'C' || tester == 'c')owner.set_newpassword();
-		if (tester == 'S' || tester == 's')Search_no(obj, num);
-		if (tester == 'A' || tester == 'a') {
-			add_new(obj, &num);
-			app_data(obj, num);
+		if (tester == 'S' || tester == 's') {
+			int i = 0;
+			cout << "the no. of patiant : ";
+			cin >> i;
+			obj[0].Search_no(obj, num, i);
 		}
-		if (tester == 'E' || tester == 'e') {
-			edit_data(obj);
-			out_all_data(obj, num);
+		if (tester == 'A' || tester == 'a')
+			obj[0].add_new(obj, &num);
+		if (tester == 'E' || tester == 'e')
+		{
+		    obj[0].edit_data(obj, &num);
+		    obj[0].overwrite_data(obj, num);
 		}
-		if (tester == 'd' || tester == 'D')delete_element(obj, &num);
+		if (tester == 'd' || tester == 'D')
+            obj[0].delete_element(obj, &num);
 		if (tester == 'Q' || tester == 'q')break;
 	}
-	cout << "see you soon\n";
-	return 0;
 }
