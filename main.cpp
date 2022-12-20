@@ -500,7 +500,73 @@ public:
     }
 
 
+void Search_BloodType(vector<Patient>obj, int num){
 
+    {
+
+        string patientbloodtype ;
+
+        while(true)
+
+            {
+
+            cout<<"Enter blood type: ";
+
+            cin>>patientbloodtype;
+
+            if(check_BloodType(patientbloodtype))
+
+                break;
+
+            else
+
+                cout<<"\nInvalid Blood Type\n\n";
+
+            }
+
+        system ("CLS");
+
+        cout<<"============================================================================================"<<endl;
+
+        cout<<"==================================| Data that was found |==================================="<<endl;
+
+        cout<<"============================================================================================"<<endl;
+
+        cout<<"    NO :        |          BloodType:                 |      ID       "<<endl;
+
+        cout<<"____________________________________________________________________________________________"<<endl;
+
+        int counter =0;
+
+        for(int i =0 ;  i < num ; i++ )
+
+        {
+
+            if(obj[i].getBloodType() == patientbloodtype)
+
+            {
+
+                counter++;
+
+                cout<< "    " <<counter<<"                         "<<obj[i].getBloodType()<<"                            "<<obj[i].getID()<<endl;
+
+            }
+
+        }
+
+        cout<<"============================================================================================="<<endl;
+
+        if(counter==0)
+
+        {
+
+            cout<<"\nNo Records Found !\n\n";
+
+        }
+
+    }
+
+}
 
 
 
