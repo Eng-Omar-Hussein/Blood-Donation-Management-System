@@ -498,80 +498,73 @@ public:
 
         }
     }
-
-
-void Search_BloodType(vector<Patient>obj, int num){
-
-    {
-
-        string patientbloodtype ;
-
-        while(true)
-
-            {
-
-            cout<<"Enter blood type: ";
-
-            cin>>patientbloodtype;
-
-            if(check_BloodType(patientbloodtype))
-
-                break;
-
-            else
-
-                cout<<"\nInvalid Blood Type\n\n";
-
-            }
-
-        system ("CLS");
-
-        cout<<"============================================================================================"<<endl;
-
-        cout<<"==================================| Data that was found |==================================="<<endl;
-
-        cout<<"============================================================================================"<<endl;
-
-        cout<<"    NO :        |          BloodType:                 |      ID       "<<endl;
-
-        cout<<"____________________________________________________________________________________________"<<endl;
-
-        int counter =0;
-
-        for(int i =0 ;  i < num ; i++ )
+    void Search_BloodType(vector<Patient>obj, int num) {
 
         {
 
-            if(obj[i].getBloodType() == patientbloodtype)
+            string patientbloodtype;
+
+            while (true)
 
             {
 
-                counter++;
+                cout << "Enter blood type: ";
 
-                cout<< "    " <<counter<<"                         "<<obj[i].getBloodType()<<"                            "<<obj[i].getID()<<endl;
+                cin >> patientbloodtype;
+
+                if (check_BloodType(patientbloodtype))
+
+                    break;
+
+                else
+
+                    cout << "\nInvalid Blood Type\n\n";
 
             }
 
-        }
+            system("CLS");
 
-        cout<<"============================================================================================="<<endl;
+            cout << "============================================================================================" << endl;
 
-        if(counter==0)
+            cout << "==================================| Data that was found |===================================" << endl;
 
-        {
+            cout << "============================================================================================" << endl;
 
-            cout<<"\nNo Records Found !\n\n";
+            cout << "    NO :        |          BloodType:                 |      ID       " << endl;
+
+            cout << "____________________________________________________________________________________________" << endl;
+
+            int counter = 0;
+
+            for (int i = 0; i < num; i++)
+
+            {
+
+                if (obj[i].getBloodType() == patientbloodtype)
+
+                {
+
+                    counter++;
+
+                    cout << "    " << counter << "                         " << obj[i].getBloodType() << "                            " << obj[i].getID() << endl;
+
+                }
+
+            }
+
+            cout << "=============================================================================================" << endl;
+
+            if (counter == 0)
+
+            {
+
+                cout << "\nNo Records Found !\n\n";
+
+            }
 
         }
 
     }
-
-}
-
-
-
-
-
     void Search_no(vector<Patient>obj, int num, int i) {
         if (i > 0 && i <= num) {
             i--;
@@ -725,4 +718,5 @@ int main() {
             obj[0].delete_element(obj, &num);
         if (tester == 'Q' || tester == 'q')break;
     }
+    cout << "See you son.\n";
 }
