@@ -1,0 +1,7 @@
+﻿  ConsoleApplication.cpp
+C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Patient.cpp
+  Generating Code...
+C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\Patient.cpp(34): warning C4715: 'Patient::delete_element': not all control paths return a value
+  ConsoleApplication.vcxproj -> C:\Users\engom\source\repos\ConsoleApplication\Debug\ConsoleApplication.exe
