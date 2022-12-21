@@ -1,5 +1,0 @@
-﻿  ConsoleApplication.cpp
-C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(61,13): error C2561: 'main': function must return a value
-C:\Users\engom\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(9): message : see declaration of 'main'
