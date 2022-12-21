@@ -4,11 +4,11 @@ using namespace std;
 #include<string>
 #include <vector>
 #include "password.h";
-#include "Patient.h";
+#include "Donor.h";
 
 int main() {
     string my_password;
-    vector<Patient>obj(100);
+    vector<Donor>obj(100);
     password owner;
     do {
         cout << "please enter a correct password or < 0 > to quit: ";
@@ -22,7 +22,7 @@ int main() {
     int num = 0;
     obj[0].refrish(&num);
     obj[0].update(obj, num);
-    cout << "\nthe number of patients in the system : " << num << endl;
+    cout << "\nthe number of Donors in the system : " << num << endl;
     char tester;
     while (true) {
         cout << "\nto change your password ,| enter <C> |\n";
@@ -58,7 +58,7 @@ int main() {
             break;
         case 'Q':
         case 'q':
-            cout << "See you son.\n";
+            cout << "\nSee you soon.\n";
             return 0;
             break;
         default:
