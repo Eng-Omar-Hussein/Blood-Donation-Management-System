@@ -727,12 +727,12 @@ int main() {
             break;
         case 'Q':
         case 'q':
-            return;
+            cout << "See you son.\n";
+            return 0;
             break;
         default:
             system("cls");
             break;
         }
     }
-    cout << "See you son.\n";
 }
