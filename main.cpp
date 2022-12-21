@@ -352,16 +352,17 @@ public:
             switch (choice)
             {
             case '1':
-                cout << "Enter the patient's id: ";
-                cin >> x;
-                for (int i = 0; i < num; i++)
-                {
-                    if (x == obj[i].getID())
-                        printData(obj, i);
-                    else
-                        cout << "\nID was not found\n";
+            cout << "Enter the patient's id: ";
+            cin >> x;
+            for (int i = 0; i < num; i++)
+            {
+                if (x == obj[i].getID()) {
+                    printData(obj, i);
+                    t = false;
                 }
-                break;
+            }
+            if(t)cout << "\nID was not found\n\n";
+            break;
             case '2':
                 cout << "the no. of patient : ";
                 cin >> i;
@@ -702,21 +703,36 @@ int main() {
         cout << "to Quit                 ,| enter <Q> |\n";
         cout << "Enter your option: ";
         cin >> tester;
-        if (tester == 'X' || tester == 'x')
-            system("cls");
-        if (tester == 'C' || tester == 'c')owner.set_newpassword();
-        if (tester == 'S' || tester == 's')
+        switch (tester){
+        case 'C':
+        case 'c':
+            owner.set_newpassword();
+            break;
+        case 'S':
+        case 's':
             obj[0].search(obj, num);
-        if (tester == 'A' || tester == 'a')
+            break;
+        case 'A':
+        case 'a':
             obj[0].add_new(obj, &num);
-        if (tester == 'E' || tester == 'e')
-        {
+            break;
+        case 'E':
+        case 'e':
             obj[0].edit_data(obj, &num);
             obj[0].overwrite_data(obj, num);
-        }
-        if (tester == 'd' || tester == 'D')
+            break;
+        case 'D':
+        case 'd':
             obj[0].delete_element(obj, &num);
-        if (tester == 'Q' || tester == 'q')break;
+            break;
+        case 'Q':
+        case 'q':
+            return;
+            break;
+        default:
+            system("cls");
+            break;
+        }
     }
     cout << "See you son.\n";
 }
