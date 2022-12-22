@@ -152,7 +152,7 @@ void Donor::add_new(vector<Donor>& obj1, int* p) {
     while (true) {
         cout << "id: ";
         cin >> x1;
-        if (check_ID(x1))
+        if (check_ID(x1,obj1,*p))
         {
             obj1[*p].setID(x1);
             break;
@@ -234,7 +234,7 @@ void Donor::edit_data(vector<Donor>& obj1, int* p) {
                     while (true) {
                         cout << "Enter the new id: ";
                         cin >> y;
-                        if (obj1[i].check_ID(y))
+                        if (obj1[i].check_ID(y,obj1,*p))
                         {
                             obj1[i].setID(y);
                             break;
@@ -557,8 +557,13 @@ bool Donor::check_BloodType(string x) {
         return false;
 }
 
-bool Donor::check_ID(string x) {
-    if (x.find_first_not_of("0123456789") == string::npos && x.length() == 14)
+bool Donor::check_Duplicate_ID(string x,vector<Donor>obj,int num) {
+    for (int i = 0; i < num; i++) 
+        if (obj[i].getID()==x) return false;
+    return true;
+}
+bool Donor::check_ID(string x, vector<Donor>obj,int p) {
+    if (x.find_first_not_of("0123456789") == string::npos && x.length() == 14 && check_Duplicate_ID(x, obj, p))
         return true;
     else
         return false;
