@@ -133,7 +133,12 @@ void Donor::add_new(vector<Donor>& obj) {
             temp.setID(x1);
             break;
         }
-        else cout << "\nInvalid ID\n\n";
+        if(!check_Duplicate_ID(x1, obj))
+        {
+            cout << "\nDuplicated ID\n\n";
+        }
+        else
+            cout << "\nInvalid ID\n\n";
     }
 
     while (true)
