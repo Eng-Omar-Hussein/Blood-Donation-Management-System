@@ -8,7 +8,8 @@ using namespace std;
 
 int main() {
     string my_password;
-    vector<Donor>obj(100);
+    vector<Donor>obj;
+    Donor temp;
     password owner;
     do {
         cout << "please enter a correct password or < 0 > to quit: ";
@@ -19,10 +20,8 @@ int main() {
             return 0;
         }
     } while (owner.check_password());
-    int num = 0;
-    obj[0].refrish(&num);
-    obj[0].update(obj, num);
-    cout << "\nthe number of Donors in the system : " << num << endl;
+    temp.update(obj);
+    cout << "\nthe number of Donors in the system : " << obj.size() << endl;
     char tester;
     while (true) {
         cout << "\nto change your password ,| enter <C> |\n";
@@ -41,20 +40,20 @@ int main() {
             break;
         case 'S':
         case 's':
-            obj[0].search(obj, num);
+            obj[0].search(obj);
             break;
         case 'A':
         case 'a':
-            obj[0].add_new(obj, &num);
+            obj[0].add_new(obj);
             break;
         case 'E':
         case 'e':
-            obj[0].edit_data(obj, &num);
-            obj[0].overwrite_data(obj, num);
+            obj[0].edit_data(obj);
+            obj[0].overwrite_data(obj);
             break;
         case 'D':
         case 'd':
-            obj[0].delete_element(obj, &num);
+            obj[0].delete_element(obj);
             break;
         case 'Q':
         case 'q':
