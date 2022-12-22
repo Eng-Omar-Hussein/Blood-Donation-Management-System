@@ -266,8 +266,22 @@ void Donor::edit_data(vector<Donor>& obj1) {
 
 void Donor::update(vector<Donor>& obj) {
     Donor temp1;
+    bool found = false;
     string temp;
-	fstream file;
+    fstream file;
+	file.open("data.txt", ios::in);
+	if (file.is_open()) {
+		string t;
+		while (!file.eof()) {
+			getline(file, t);
+            if(t.size())
+               found = true;
+            file >> ws;
+		}
+        }
+		file.close();
+    if(found){
+    fstream file;
 	file.open("data.txt", ios::in);
 	if (file.is_open()) {
 		while (!file.eof()) {
@@ -283,6 +297,7 @@ void Donor::update(vector<Donor>& obj) {
 		}
 		file.close();
 	}
+    }
 }
 
 void Donor::overwrite_data(vector<Donor>& obj) {

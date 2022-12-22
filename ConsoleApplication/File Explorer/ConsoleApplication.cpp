@@ -40,20 +40,20 @@ int main() {
             break;
         case 'S':
         case 's':
-            obj[0].search(obj);
+            temp.search(obj);
             break;
         case 'A':
         case 'a':
-            obj[0].add_new(obj);
+            temp.add_new(obj);
             break;
         case 'E':
         case 'e':
-            obj[0].edit_data(obj);
-            obj[0].overwrite_data(obj);
+            temp.edit_data(obj);
+            temp.overwrite_data(obj);
             break;
         case 'D':
         case 'd':
-            obj[0].delete_element(obj);
+            temp.delete_element(obj);
             break;
         case 'Q':
         case 'q':
