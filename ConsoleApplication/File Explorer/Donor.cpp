@@ -32,13 +32,6 @@ int Donor::delete_element(vector<Donor>& obj1) {
         return 0;
 }
 
-Donor::Donor(string name, string bloodType, string age, string mobile, string id) {
-    this->name = name;
-    this->BloodType = bloodType;
-    this->age = age;
-    this->mobile = mobile;
-    this->id = id;
-}
 
 Donor::Donor(){
 }
@@ -81,23 +74,6 @@ void Donor::setMobile(string mobile) {
 
 void Donor::setID(string id) {
     this->id = id;
-}
-
-void Donor::readData() {
-    string name, bloodType, mobile, age, id;
-    cout << "Please enter the Donor's data: \n";
-    cout << "Name: ";
-    cin.ignore();
-    getline(cin, name); setName(name);
-    cout << "Blood Type: ";
-    cin >> BloodType; setBloodType(bloodType);
-    cout << "Mobile: ";
-    cin >> mobile; setMobile(mobile);
-    cout << "Age: ";
-    cin >> age; setAge(age);
-    cout << "ID: ";
-    cin >> id; setID(id);
-    cout << endl;
 }
 
 void Donor::printData_header(){
@@ -152,7 +128,7 @@ void Donor::add_new(vector<Donor>& obj) {
     while (true) {
         cout << "id: ";
         cin >> x1;
-        if (check_ID(x1))
+        if (check_ID(x1, obj))
         {
             temp.setID(x1);
             break;
@@ -233,7 +209,7 @@ void Donor::edit_data(vector<Donor>& obj1) {
                     while (true) {
                         cout << "Enter the new id: ";
                         cin >> y;
-                        if (obj1[i].check_ID(y))
+                        if (obj1[i].check_ID(y,obj1))
                         {
                             obj1[i].setID(y);
                             break;
@@ -557,8 +533,13 @@ bool Donor::check_BloodType(string x) {
         return false;
 }
 
-bool Donor::check_ID(string x) {
-    if (x.find_first_not_of("0123456789") == string::npos && x.length() == 14)
+bool Donor::check_Duplicate_ID(string x, vector<Donor>obj) {
+    for (int i = 0; i <obj.size() ; i++)
+        if (obj[i].getID() == x) return false;
+    return true;
+}
+bool Donor::check_ID(string x, vector<Donor>obj) {
+    if (x.find_first_not_of("0123456789") == string::npos && x.length() == 14 && check_Duplicate_ID(x, obj))
         return true;
     else
         return false;
