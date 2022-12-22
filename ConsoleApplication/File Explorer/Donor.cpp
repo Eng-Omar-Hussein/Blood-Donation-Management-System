@@ -134,9 +134,7 @@ void Donor::add_new(vector<Donor>& obj) {
             break;
         }
         if(!check_Duplicate_ID(x1, obj))
-        {
             cout << "\nDuplicated ID\n\n";
-        }
         else
             cout << "\nInvalid ID\n\n";
     }
@@ -219,7 +217,10 @@ void Donor::edit_data(vector<Donor>& obj1) {
                             obj1[i].setID(y);
                             break;
                         }
-                        else cout << "\nInvalid ID\n\n";
+                        if(!check_Duplicate_ID(y, obj1))
+                            cout << "\nDuplicated ID\n\n";
+                        else
+                            cout << "\nInvalid ID\n\n";
                     }
                     break;
                 case '5':
