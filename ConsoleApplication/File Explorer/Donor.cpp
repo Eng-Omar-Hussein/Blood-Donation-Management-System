@@ -5,7 +5,7 @@ using namespace std;
 #include <vector>
 #include "Donor.h"
 
-int Donor::delete_element(vector<Donor>& obj1, int* p) {
+int Donor::delete_element(vector<Donor>& obj1) {
     string x;
     char y;
     cout << "Enter id of Donor: ";
@@ -14,15 +14,14 @@ int Donor::delete_element(vector<Donor>& obj1, int* p) {
     cin >> y;
     if (y == 'y' || y == 'Y')
     {
-        for (int i = 0; i < *p; i++)
+        for (int i = 0; i < obj1.size(); i++)
         {
             if (x == obj1[i].getID())
             {
                 obj1.erase(obj1.begin() + i);
-                (*p)--;
-                overwrite_data(obj1, *p);
+                overwrite_data(obj1);
                 cout << "\nDonor's data has been deleted successfully\n";
-                cout << "\nthe current number of Donors: " << *p << "\n\n";
+                cout << "\nthe current number of Donors: " << obj1.size() << "\n\n";
                 return 0;
             }
         }
@@ -106,7 +105,7 @@ void Donor::printData_header(){
     cout << "=======================================================================================================================================================================" << endl;
     cout << "=======================================================================| Data Found |==================================================================================" << endl;
     cout << "=======================================================================================================================================================================" << endl;
-    cout << "        NO :    |          BloodType:             |           ID            |             Mobile        |              Age           |               NAME" << endl;
+    cout << "        No.:     |          BloodType             |           ID            |             Mobile        |              Age            |              NAME" << endl;
     cout << "_______________________________________________________________________________________________________________________________________________________________________" << endl;
 }
 
@@ -119,20 +118,21 @@ void Donor::printData_foater() {
     cout << "=======================================================================================================================================================================" << endl;
 }
 
-void Donor::add_new(vector<Donor>& obj1, int* p) {
+void Donor::add_new(vector<Donor>& obj) {
+    Donor temp;
     string x1;
-    cout << "\nDonor #" << *p + 1 << "\n\n";
+    cout << "\nDonor #" << obj.size()+1 << "\n\n";
     cout << "name: ";
     cin.ignore();
     getline(cin, x1);
-    obj1[*p].setName(x1);
+    temp.setName(x1);
 
     while (true) {
         cout << "Blood type: ";
         cin >> x1;
         if (check_BloodType(x1))
         {
-            obj1[*p].setBloodType(x1);
+            temp.setBloodType(x1);
             break;
         }
         else cout << "\nInvalid Blood type\n\n";
@@ -143,7 +143,7 @@ void Donor::add_new(vector<Donor>& obj1, int* p) {
         cin >> x1;
         if (check_mobile(x1))
         {
-            obj1[*p].setMobile(x1);
+            temp.setMobile(x1);
             break;
         }
         else cout << "\nInvalid phone number\n\n";
@@ -152,9 +152,9 @@ void Donor::add_new(vector<Donor>& obj1, int* p) {
     while (true) {
         cout << "id: ";
         cin >> x1;
-        if (check_ID(x1,obj1,*p))
+        if (check_ID(x1))
         {
-            obj1[*p].setID(x1);
+            temp.setID(x1);
             break;
         }
         else cout << "\nInvalid ID\n\n";
@@ -166,23 +166,22 @@ void Donor::add_new(vector<Donor>& obj1, int* p) {
         cin >> x1;
         if (check_age(x1))
         {
-            obj1[*p].setAge(x1);
+            temp.setAge(x1);
             break;
         }
-        else
-            cout << "\nage is Invalid\n\n";
+        else cout << "\nage is Invalid\n\n";
     }
-    (*p)++;
-    app_data(obj1, *(p));
-    cout << "\nDonor #" << *p << " has been added successfully\n";
-    cout << "\nthe current number of Donors: " << *p << "\n\n";
+    obj.push_back(temp);
+    app_data(obj);
+    cout << "\nDonor #" << obj.size() << " has been added successfully\n";
+    cout << "\nthe current number of Donors: " << obj.size() << "\n\n";
 }
 
-void Donor::edit_data(vector<Donor>& obj1, int* p) {
+void Donor::edit_data(vector<Donor>& obj1) {
     string x;
     cout << "Enter the Donor's id: ";
     cin >> x;
-    for (int i = 0; i < *p; i++)
+    for (int i = 0; i < obj1.size(); i++)
     {
         if (x == obj1[i].getID())
         {
@@ -234,7 +233,7 @@ void Donor::edit_data(vector<Donor>& obj1, int* p) {
                     while (true) {
                         cout << "Enter the new id: ";
                         cin >> y;
-                        if (obj1[i].check_ID(y,obj1,*p))
+                        if (obj1[i].check_ID(y))
                         {
                             obj1[i].setID(y);
                             break;
@@ -265,45 +264,32 @@ void Donor::edit_data(vector<Donor>& obj1, int* p) {
     cout << "\nid not found\n\n";
 }
 
-void Donor::refrish(int* p) {
-    fstream file;
-    file.open("data.txt", ios::in);
-    if (file.is_open()) {
-        string t;
-        while (!file.eof()) {
-            getline(file, t);
-            if (t.size())
-                (*p)++;
-            file >> ws;
-        }
-        file.close();
-    }
-}
-
-void Donor::update(vector<Donor>& obj, int num) {
-    fstream file;
-    file.open("data.txt", ios::in);
-    if (file.is_open()) {
-        string temp;
-        for (int i = 0; i < num; i++) {
+void Donor::update(vector<Donor>& obj) {
+    Donor temp1;
+    string temp;
+	fstream file;
+	file.open("data.txt", ios::in);
+	if (file.is_open()) {
+		while (!file.eof()) {
             file >> ws;
             getline(file, temp);
-            obj[i].setName(temp.substr(0, temp.find(",")));
-            obj[i].setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
-            obj[i].setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
-            obj[i].setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
-            obj[i].setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
+            temp1.setName(temp.substr(0, temp.find(",")));
+            temp1.setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
+            temp1.setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
+            temp1.setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
+            temp1.setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
+			obj.push_back(temp1);
             file >> ws;
-        }
-        file.close();
-    }
+		}
+		file.close();
+	}
 }
 
-void Donor::overwrite_data(vector<Donor>& obj, int num) {
+void Donor::overwrite_data(vector<Donor>& obj) {
     fstream file;
     file.open("data.txt", ios::out);
     if (file.is_open()) {
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             file << obj[i].getName() << ",";
             file << obj[i].getBloodType() << ";";
@@ -315,21 +301,20 @@ void Donor::overwrite_data(vector<Donor>& obj, int num) {
     file.close();
 }
 
-void Donor::app_data(vector<Donor>& obj, int num) {
+void Donor::app_data(vector<Donor>& obj) {
     fstream file;
-    num--;
     file.open("data.txt", ios::app);
     if (file.is_open()) {
-        file << obj[num].getName() << ",";
-        file << obj[num].getBloodType() << ";";
-        file << obj[num].getMobile() << "/";
-        file << obj[num].getID() << ":";
-        file << obj[num].getAge() << ".\n";
+        file << obj[(obj.size()-1)].getName() << ",";
+        file << obj[(obj.size()-1)].getBloodType() << ";";
+        file << obj[(obj.size()-1)].getMobile() << "/";
+        file << obj[(obj.size()-1)].getID() << ":";
+        file << obj[(obj.size()-1)].getAge() << ".\n";
         file.close();
     }
 }
 
-void Donor::search(vector<Donor>obj, int num) {
+void Donor::search(vector<Donor>obj) {
     string x;
     int i;
     char choice;
@@ -347,7 +332,7 @@ void Donor::search(vector<Donor>obj, int num) {
             cout << "Enter the Donor's id: ";
             cin >> x;
             printData_header();
-            for (int i = 0; i < num; i++)
+            for (int i = 0; i < obj.size(); i++)
             {
                 if (x == obj[i].getID()) {
                     printData(obj, i);
@@ -360,7 +345,7 @@ void Donor::search(vector<Donor>obj, int num) {
         case '2':
             cout << "the no. of Donor : ";
             cin >> i;
-            Search_no(obj, num, i);
+            Search_no(obj, i);
             break;
         case '3':
             while (true)
@@ -369,7 +354,7 @@ void Donor::search(vector<Donor>obj, int num) {
                 cin >> x;
                 if (check_BloodType(x))
                 {
-                    search_recip(obj, num, x);
+                    search_recip(obj, x);
                     break;
                 }
                 else
@@ -377,7 +362,7 @@ void Donor::search(vector<Donor>obj, int num) {
             }
             break;
         case '4':
-            Search_BloodType(obj, num);
+            Search_BloodType(obj);
             break;
         case '5':
             return;
@@ -387,19 +372,19 @@ void Donor::search(vector<Donor>obj, int num) {
     }
 }
 
-void Donor::search_recip(vector<Donor>obj, int num, string x) {
+void Donor::search_recip(vector<Donor>obj, string x) {
     bool found = false;
     if (x == "AB+")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
             printData(obj, i);
         printData_foater();
     }
     else if (x == "AB-")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-" || obj[i].getBloodType() == "B-" || obj[i].getBloodType() == "A-" || obj[i].getBloodType() == "AB-")
             {
@@ -415,7 +400,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     else if (x == "A+")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-" || obj[i].getBloodType() == "O+" || obj[i].getBloodType() == "A-" || obj[i].getBloodType() == "A+")
             {
@@ -431,7 +416,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     else if (x == "A-")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-" || obj[i].getBloodType() == "A-")
             {
@@ -447,7 +432,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     else if (x == "B+")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-" || obj[i].getBloodType() == "O+" || obj[i].getBloodType() == "B-" || obj[i].getBloodType() == "B+")
             {
@@ -463,7 +448,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     else if (x == "B-")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-" || obj[i].getBloodType() == "B-")
             {
@@ -479,7 +464,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     else if (x == "O+")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-" || obj[i].getBloodType() == "O+")
             {
@@ -495,7 +480,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     else if (x == "O-")
     {
         printData_header();
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < obj.size(); i++)
         {
             if (obj[i].getBloodType() == "O-")
             {
@@ -510,7 +495,7 @@ void Donor::search_recip(vector<Donor>obj, int num, string x) {
     }
 }
 
-void Donor::Search_BloodType(vector<Donor>obj, int num) {
+void Donor::Search_BloodType(vector<Donor>obj) {
     string Donorbloodtype;
     while (true) {
         cout << "Enter blood type: ";
@@ -522,7 +507,7 @@ void Donor::Search_BloodType(vector<Donor>obj, int num) {
     }
     printData_header();
     bool counter = false;
-    for (int i = 0; i < num; i++) {
+    for (int i = 0; i < obj.size(); i++) {
         if (obj[i].getBloodType() == Donorbloodtype) {
             counter = true;
             printData(obj, i);
@@ -533,14 +518,14 @@ void Donor::Search_BloodType(vector<Donor>obj, int num) {
         cout << "\nNo Records Found !\n\n";
 }
 
-void Donor::Search_no(vector<Donor>obj, int num, int i) {
+void Donor::Search_no(vector<Donor>obj, int i) {
     printData_header();
-    if (i > 0 && i <= num) {
+    if (i > 0 && i <= obj.size()) {
         i--;
         printData(obj, i);
     }
     printData_foater();
-    if (i <= 0 || i > num)
+    if (i <= 0 || i > obj.size())
         cout << "\nDonor was not found\n\n";
 }
 
@@ -557,13 +542,8 @@ bool Donor::check_BloodType(string x) {
         return false;
 }
 
-bool Donor::check_Duplicate_ID(string x,vector<Donor>obj,int num) {
-    for (int i = 0; i < num; i++) 
-        if (obj[i].getID()==x) return false;
-    return true;
-}
-bool Donor::check_ID(string x, vector<Donor>obj,int p) {
-    if (x.find_first_not_of("0123456789") == string::npos && x.length() == 14 && check_Duplicate_ID(x, obj, p))
+bool Donor::check_ID(string x) {
+    if (x.find_first_not_of("0123456789") == string::npos && x.length() == 14)
         return true;
     else
         return false;

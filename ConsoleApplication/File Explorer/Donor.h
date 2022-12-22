@@ -1,6 +1,6 @@
 class Donor {
 private:
-    string name, BloodType, mobile, age, id;
+    string name, BloodType, mobile, id, age;
 public:
     string getName();
     string getBloodType();
@@ -13,25 +13,23 @@ public:
     void setMobile(string);
     void setID(string);
     void readData();
-    void printData(vector<Donor>, int);
+    void printData(vector<Donor>obj, int i);
     void printData_header();
     void printData_foater();
-    void add_new(vector<Donor>&, int*);
-    void edit_data(vector<Donor>&, int*);
-    void refrish(int*);
-    void update(vector<Donor>&, int);
-    void overwrite_data(vector<Donor>&, int);
-    void app_data(vector<Donor>&, int);
-    void search(vector<Donor>, int);
-    void search_recip(vector<Donor>, int, string);
-    void Search_BloodType(vector<Donor>, int);
-    void Search_no(vector<Donor>, int, int);
+    void add_new(vector<Donor>&);
+    void edit_data(vector<Donor>&);
+    void update(vector<Donor>&);
+    void overwrite_data(vector<Donor>&);
+    void app_data(vector<Donor>&);
+    void search(vector<Donor>);
+    void search_recip(vector<Donor>, string);
+    void Search_BloodType(vector<Donor>);
+    void Search_no(vector<Donor>, int);
     bool check_BloodType(string);
-    bool check_Duplicate_ID(string, vector<Donor>, int);
-    bool check_ID(string, vector<Donor>, int);
+    bool check_ID(string);
     bool check_mobile(string);
     bool check_age(string);
-    int delete_element(vector<Donor>&, int*);
+    int delete_element(vector<Donor>&);
     Donor(string, string, string, string, string);
     Donor();
 };
