@@ -1,12 +1,9 @@
 #include<iostream>
+using namespace std;
 #include<fstream>
 #include <string>
 #include <vector>
 #include "Donor.h"
-
-
-using namespace std;
-
 struct counter {
     int ABpos = 0, ABneg = 0, Apos = 0, Aneg = 0;
     int Bpos = 0, Bneg = 0, Opos = 0, Oneg = 0;
