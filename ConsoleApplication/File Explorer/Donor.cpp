@@ -36,6 +36,10 @@ int Donor::delete_element(vector<Donor>& obj1) {
                     BloodTypeCount.Bpos--;
                 else if (obj1[i].getBloodType() == "B-")
                     BloodTypeCount.Bneg--;
+                else if (obj1[i].getBloodType() == "AB+")
+                    BloodTypeCount.ABpos--;
+                else if (obj1[i].getBloodType() == "AB-")
+                    BloodTypeCount.ABneg--;
                 else if (obj1[i].getBloodType() == "O+")
                     BloodTypeCount.Opos--;
                 else
@@ -111,12 +115,6 @@ void Donor::printData_header() {
 void Donor::printData(vector<Donor>obj, int i) {
 
         cout << "\t" << i + 1 << "\t\t\t" << obj[i].getBloodType() << "\t\t\t" << obj[i].getID() << "\t\t\t" << obj[i].getMobile() << "\t\t\t" << obj[i].getAge() << "\t\t\t" << obj[i].getName() << endl;
-        cout << "Number of blood types in the system:\n";
-        cout << "A+ : " << BloodTypeCount.Apos << ", A- : " << BloodTypeCount.Aneg << endl;
-        cout << "B+ : " << BloodTypeCount.Bpos << ", B- : " << BloodTypeCount.Bneg << endl;
-        cout << "AB+ : " << BloodTypeCount.ABpos << ", AB- : " << BloodTypeCount.ABneg << endl;
-        cout << "O+ : " << BloodTypeCount.Opos << ", O- : " << BloodTypeCount.Oneg << endl;
-        cout << "=======================================================================================================================================================================" << endl;
 }
 
 void Donor::printData_foater() {
@@ -135,8 +133,26 @@ void Donor::add_new(vector<Donor>& obj) {
     while (true) {
         cout << "Blood type: ";
         cin >> x1;
+        
         if (check_BloodType(x1))
         {
+            if (x1 == "A+")
+                BloodTypeCount.Apos++;
+            else if (x1 == "A-")
+                BloodTypeCount.Aneg++;
+            else if (x1 == "B+")
+                BloodTypeCount.Bpos++;
+            else if (x1 == "B-")
+                BloodTypeCount.Bneg++;
+            else if (x1 == "AB+")
+                BloodTypeCount.ABpos++;
+            else if (x1 == "AB-")
+                BloodTypeCount.ABneg++;
+            else if (x1 == "O+")
+                BloodTypeCount.Opos++;
+            else
+                BloodTypeCount.Oneg++;
+
             temp.setBloodType(x1);
             break;
         }
@@ -223,6 +239,10 @@ void Donor::edit_data(vector<Donor>& obj1) {
                         BloodTypeCount.Bpos--;
                     else if (obj1[i].getBloodType() == "B-")
                         BloodTypeCount.Bneg--;
+                    else if (obj1[i].getBloodType() == "AB+")
+                        BloodTypeCount.ABpos--;
+                    else if (obj1[i].getBloodType() == "AB-")
+                        BloodTypeCount.ABneg--;
                     else if (obj1[i].getBloodType() == "O+")
                         BloodTypeCount.Opos--;
                     else
@@ -233,6 +253,23 @@ void Donor::edit_data(vector<Donor>& obj1) {
                         cin >> y;
                         if (obj1[i].check_BloodType(y))
                         {
+                            if (y == "A+")
+                                BloodTypeCount.Apos++;
+                            else if (y == "A-")
+                                BloodTypeCount.Aneg++;
+                            else if (y == "B+")
+                                BloodTypeCount.Bpos++;
+                            else if (y == "B-")
+                                BloodTypeCount.Bneg++;
+                            else if (y == "AB+")
+                                BloodTypeCount.ABpos++;
+                            else if (y == "AB-")
+                                BloodTypeCount.ABneg++;
+                            else if (y == "O+")
+                                BloodTypeCount.Opos++;
+                            else
+                                BloodTypeCount.Oneg++;
+
                             obj1[i].setBloodType(y);
                             break;
                         }
@@ -540,7 +577,7 @@ void Donor::Search_BloodType(vector<Donor>obj) {
     while (true) {
         cout << "Enter blood type: ";
         cin >> Donorbloodtype;
-        if (check_BloodType(Donorbloodtype))
+        if (check_BloodType(Donorbloodtype)) 
             break;
         else
             cout << "\nInvalid Blood Type\n\n";
@@ -554,6 +591,26 @@ void Donor::Search_BloodType(vector<Donor>obj) {
         }
     }
     printData_foater();
+    if (counter) {
+        cout << "The number of blood bags of type " << Donorbloodtype << " in the system are: ";
+        if (Donorbloodtype == "A+")
+            cout << BloodTypeCount.Apos << endl;
+        else if (Donorbloodtype == "A-")
+            cout << BloodTypeCount.Aneg << endl;
+        else if (Donorbloodtype == "B+")
+            cout << BloodTypeCount.Bpos << endl;
+        else if (Donorbloodtype == "B-")
+            cout << BloodTypeCount.Bneg << endl;
+        else if (Donorbloodtype == "AB+")
+            cout << BloodTypeCount.ABpos << endl;
+        else if (Donorbloodtype == "AB-")
+            cout << BloodTypeCount.ABneg << endl;
+        else if (Donorbloodtype == "O+")
+            cout << BloodTypeCount.Opos << endl;
+        else
+            cout << BloodTypeCount.Oneg << endl;
+        printData_foater();
+    }
     if (!counter)
         cout << "\nNo Records Found !\n\n";
 }
@@ -570,34 +627,14 @@ void Donor::Search_no(vector<Donor>obj, int i) {
 }
 
 bool Donor::check_BloodType(string x) {
-    if (x == "A+" || x == "A-") {
-        if (x == "A+")
-            BloodTypeCount.Apos++;
-        else
-            BloodTypeCount.Aneg++;
+    if (x == "A+" || x == "A-")
         return true;
-    }
-    else if (x == "B+" || x == "B-") {
-        if (x == "B+")
-            BloodTypeCount.Bpos++;
-        else
-            BloodTypeCount.Bneg++;
+    else if (x == "B+" || x == "B-") 
         return true;
-    }
-    else if (x == "O+" || x == "O-") {
-        if (x == "O+")
-            BloodTypeCount.Opos++;
-        else
-            BloodTypeCount.Oneg++;
+    else if (x == "O+" || x == "O-") 
         return true;
-    }
-    else if (x == "AB+" || x == "AB-") {
-        if (x == "AB+")
-            BloodTypeCount.ABpos++;
-        else
-            BloodTypeCount.ABneg++;
+    else if (x == "AB+" || x == "AB-")
         return true;
-    }
     else
         return false;
 }
