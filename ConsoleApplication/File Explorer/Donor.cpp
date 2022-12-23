@@ -1,9 +1,19 @@
 #include<iostream>
-using namespace std;
 #include<fstream>
-#include<string>
+#include <string>
 #include <vector>
 #include "Donor.h"
+
+
+using namespace std;
+
+struct counter {
+    int ABpos = 0, ABneg = 0, Apos = 0, Aneg = 0;
+    int Bpos = 0, Bneg = 0, Opos = 0, Oneg = 0;
+};
+
+counter BloodTypeCount;
+
 
 int Donor::delete_element(vector<Donor>& obj1) {
     string x;
@@ -18,6 +28,23 @@ int Donor::delete_element(vector<Donor>& obj1) {
         {
             if (x == obj1[i].getID())
             {
+                if (obj1[i].getBloodType() == "A+")
+                    BloodTypeCount.Apos--;
+                else if (obj1[i].getBloodType() == "A-")
+                    BloodTypeCount.Aneg--;
+                else if (obj1[i].getBloodType() == "B+")
+                    BloodTypeCount.Bpos--;
+                else if (obj1[i].getBloodType() == "B-")
+                    BloodTypeCount.Bneg--;
+                else if (obj1[i].getBloodType() == "AB+")
+                    BloodTypeCount.ABpos--;
+                else if (obj1[i].getBloodType() == "AB-")
+                    BloodTypeCount.ABneg--;
+                else if (obj1[i].getBloodType() == "O+")
+                    BloodTypeCount.Opos--;
+                else
+                    BloodTypeCount.Oneg--;
+
                 obj1.erase(obj1.begin() + i);
                 overwrite_data(obj1);
                 cout << "\nDonor's data has been deleted successfully\n";
@@ -33,7 +60,7 @@ int Donor::delete_element(vector<Donor>& obj1) {
 }
 
 
-Donor::Donor(){
+Donor::Donor() {
 }
 
 string Donor::getName() {
@@ -76,7 +103,7 @@ void Donor::setID(string id) {
     this->id = id;
 }
 
-void Donor::printData_header(){
+void Donor::printData_header() {
     system("CLS");
     cout << "=======================================================================================================================================================================" << endl;
     cout << "=======================================================================| Data Found |==================================================================================" << endl;
@@ -87,7 +114,7 @@ void Donor::printData_header(){
 
 void Donor::printData(vector<Donor>obj, int i) {
 
-    cout << "\t" << i+1 << "\t\t\t" << obj[i].getBloodType() << "\t\t\t" << obj[i].getID() << "\t\t\t" << obj[i].getMobile() << "\t\t\t" << obj[i].getAge() << "\t\t\t" << obj[i].getName() << endl;
+        cout << "\t" << i + 1 << "\t\t\t" << obj[i].getBloodType() << "\t\t\t" << obj[i].getID() << "\t\t\t" << obj[i].getMobile() << "\t\t\t" << obj[i].getAge() << "\t\t\t" << obj[i].getName() << endl;
 }
 
 void Donor::printData_foater() {
@@ -97,7 +124,7 @@ void Donor::printData_foater() {
 void Donor::add_new(vector<Donor>& obj) {
     Donor temp;
     string x1;
-    cout << "\nDonor #" << obj.size()+1 << "\n\n";
+    cout << "\nDonor #" << obj.size() + 1 << "\n\n";
     cout << "name: ";
     cin.ignore();
     getline(cin, x1);
@@ -106,8 +133,26 @@ void Donor::add_new(vector<Donor>& obj) {
     while (true) {
         cout << "Blood type: ";
         cin >> x1;
+        
         if (check_BloodType(x1))
         {
+            if (x1 == "A+")
+                BloodTypeCount.Apos++;
+            else if (x1 == "A-")
+                BloodTypeCount.Aneg++;
+            else if (x1 == "B+")
+                BloodTypeCount.Bpos++;
+            else if (x1 == "B-")
+                BloodTypeCount.Bneg++;
+            else if (x1 == "AB+")
+                BloodTypeCount.ABpos++;
+            else if (x1 == "AB-")
+                BloodTypeCount.ABneg++;
+            else if (x1 == "O+")
+                BloodTypeCount.Opos++;
+            else
+                BloodTypeCount.Oneg++;
+
             temp.setBloodType(x1);
             break;
         }
@@ -133,7 +178,7 @@ void Donor::add_new(vector<Donor>& obj) {
             temp.setID(x1);
             break;
         }
-        if(!check_Duplicate_ID(x1, obj))
+        if (!check_Duplicate_ID(x1, obj))
             cout << "\nDuplicated ID\n\n";
         else
             cout << "\nInvalid ID\n\n";
@@ -185,11 +230,46 @@ void Donor::edit_data(vector<Donor>& obj1) {
                     obj1[i].setName(y);
                     break;
                 case '2':
+
+                    if (obj1[i].getBloodType() == "A+")
+                        BloodTypeCount.Apos--;
+                    else if (obj1[i].getBloodType() == "A-")
+                        BloodTypeCount.Aneg--;
+                    else if (obj1[i].getBloodType() == "B+")
+                        BloodTypeCount.Bpos--;
+                    else if (obj1[i].getBloodType() == "B-")
+                        BloodTypeCount.Bneg--;
+                    else if (obj1[i].getBloodType() == "AB+")
+                        BloodTypeCount.ABpos--;
+                    else if (obj1[i].getBloodType() == "AB-")
+                        BloodTypeCount.ABneg--;
+                    else if (obj1[i].getBloodType() == "O+")
+                        BloodTypeCount.Opos--;
+                    else
+                        BloodTypeCount.Oneg--;
+
                     while (true) {
                         cout << "Enter the new blood type: ";
                         cin >> y;
                         if (obj1[i].check_BloodType(y))
                         {
+                            if (y == "A+")
+                                BloodTypeCount.Apos++;
+                            else if (y == "A-")
+                                BloodTypeCount.Aneg++;
+                            else if (y == "B+")
+                                BloodTypeCount.Bpos++;
+                            else if (y == "B-")
+                                BloodTypeCount.Bneg++;
+                            else if (y == "AB+")
+                                BloodTypeCount.ABpos++;
+                            else if (y == "AB-")
+                                BloodTypeCount.ABneg++;
+                            else if (y == "O+")
+                                BloodTypeCount.Opos++;
+                            else
+                                BloodTypeCount.Oneg++;
+
                             obj1[i].setBloodType(y);
                             break;
                         }
@@ -212,12 +292,12 @@ void Donor::edit_data(vector<Donor>& obj1) {
                     while (true) {
                         cout << "Enter the new id: ";
                         cin >> y;
-                        if (obj1[i].check_ID(y,obj1))
+                        if (obj1[i].check_ID(y, obj1))
                         {
                             obj1[i].setID(y);
                             break;
                         }
-                        if(!check_Duplicate_ID(y, obj1))
+                        if (!check_Duplicate_ID(y, obj1))
                             cout << "\nDuplicated ID\n\n";
                         else
                             cout << "\nInvalid ID\n\n";
@@ -251,34 +331,34 @@ void Donor::update(vector<Donor>& obj) {
     bool found = false;
     string temp;
     fstream file;
-	file.open("data.txt", ios::in);
-	if (file.is_open()) {
-		string t;
-		while (!file.eof()) {
-			getline(file, t);
-            if(t.size())
-               found = true;
+    file.open("data.txt", ios::in);
+    if (file.is_open()) {
+        string t;
+        while (!file.eof()) {
+            getline(file, t);
+            if (t.size())
+                found = true;
             file >> ws;
-		}
         }
-		file.close();
-    if(found){
-    fstream file;
-	file.open("data.txt", ios::in);
-	if (file.is_open()) {
-		while (!file.eof()) {
-            file >> ws;
-            getline(file, temp);
-            temp1.setName(temp.substr(0, temp.find(",")));
-            temp1.setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
-            temp1.setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
-            temp1.setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
-            temp1.setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
-			obj.push_back(temp1);
-            file >> ws;
-		}
-		file.close();
-	}
+    }
+    file.close();
+    if (found) {
+        fstream file;
+        file.open("data.txt", ios::in);
+        if (file.is_open()) {
+            while (!file.eof()) {
+                file >> ws;
+                getline(file, temp);
+                temp1.setName(temp.substr(0, temp.find(",")));
+                temp1.setBloodType(temp.substr(temp.find(",") + 1, temp.find(";") - temp.find(",") - 1));
+                temp1.setMobile(temp.substr(temp.find(";") + 1, temp.find("/") - temp.find(";") - 1));
+                temp1.setID(temp.substr(temp.find("/") + 1, temp.find(":") - temp.find("/") - 1));
+                temp1.setAge(temp.substr(temp.find(":") + 1, temp.find(".") - temp.find(":") - 1));
+                obj.push_back(temp1);
+                file >> ws;
+            }
+            file.close();
+        }
     }
 }
 
@@ -302,11 +382,11 @@ void Donor::app_data(vector<Donor>& obj) {
     fstream file;
     file.open("data.txt", ios::app);
     if (file.is_open()) {
-        file << obj[(obj.size()-1)].getName() << ",";
-        file << obj[(obj.size()-1)].getBloodType() << ";";
-        file << obj[(obj.size()-1)].getMobile() << "/";
-        file << obj[(obj.size()-1)].getID() << ":";
-        file << obj[(obj.size()-1)].getAge() << ".\n";
+        file << obj[(obj.size() - 1)].getName() << ",";
+        file << obj[(obj.size() - 1)].getBloodType() << ";";
+        file << obj[(obj.size() - 1)].getMobile() << "/";
+        file << obj[(obj.size() - 1)].getID() << ":";
+        file << obj[(obj.size() - 1)].getAge() << ".\n";
         file.close();
     }
 }
@@ -324,7 +404,7 @@ void Donor::search(vector<Donor>obj) {
         cout << "5) return to main menu\n";
         cout << "\nEnter your choice: ";
         cin >> choice;
-        switch (choice){
+        switch (choice) {
         case '1':
             cout << "Enter the Donor's id: ";
             cin >> x;
@@ -337,7 +417,7 @@ void Donor::search(vector<Donor>obj) {
                 }
             }
             printData_foater();
-            if(t)cout << "\nID was not found\n\n";
+            if (t)cout << "\nID was not found\n\n";
             break;
         case '2':
             cout << "the no. of Donor : ";
@@ -497,7 +577,7 @@ void Donor::Search_BloodType(vector<Donor>obj) {
     while (true) {
         cout << "Enter blood type: ";
         cin >> Donorbloodtype;
-        if (check_BloodType(Donorbloodtype))
+        if (check_BloodType(Donorbloodtype)) 
             break;
         else
             cout << "\nInvalid Blood Type\n\n";
@@ -511,6 +591,26 @@ void Donor::Search_BloodType(vector<Donor>obj) {
         }
     }
     printData_foater();
+    if (counter) {
+        cout << "The number of blood bags of type " << Donorbloodtype << " in the system are: ";
+        if (Donorbloodtype == "A+")
+            cout << BloodTypeCount.Apos << endl;
+        else if (Donorbloodtype == "A-")
+            cout << BloodTypeCount.Aneg << endl;
+        else if (Donorbloodtype == "B+")
+            cout << BloodTypeCount.Bpos << endl;
+        else if (Donorbloodtype == "B-")
+            cout << BloodTypeCount.Bneg << endl;
+        else if (Donorbloodtype == "AB+")
+            cout << BloodTypeCount.ABpos << endl;
+        else if (Donorbloodtype == "AB-")
+            cout << BloodTypeCount.ABneg << endl;
+        else if (Donorbloodtype == "O+")
+            cout << BloodTypeCount.Opos << endl;
+        else
+            cout << BloodTypeCount.Oneg << endl;
+        printData_foater();
+    }
     if (!counter)
         cout << "\nNo Records Found !\n\n";
 }
@@ -529,9 +629,9 @@ void Donor::Search_no(vector<Donor>obj, int i) {
 bool Donor::check_BloodType(string x) {
     if (x == "A+" || x == "A-")
         return true;
-    else if (x == "B+" || x == "B-")
+    else if (x == "B+" || x == "B-") 
         return true;
-    else if (x == "O+" || x == "O-")
+    else if (x == "O+" || x == "O-") 
         return true;
     else if (x == "AB+" || x == "AB-")
         return true;
@@ -540,7 +640,7 @@ bool Donor::check_BloodType(string x) {
 }
 
 bool Donor::check_Duplicate_ID(string x, vector<Donor>obj) {
-    for (int i = 0; i <obj.size() ; i++)
+    for (int i = 0; i < obj.size(); i++)
         if (obj[i].getID() == x) return false;
     return true;
 }
